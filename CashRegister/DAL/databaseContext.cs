@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CashRegister.DAL
 {
-    class databaseContext : DbContext
+    public class databaseContext : DbContext
     {
         public DbSet<Persoon> Persoon { get; set; }
         public DbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
@@ -21,6 +21,20 @@ namespace CashRegister.DAL
             // See https://stackoverflow.com/questions/37493095/entity-framework-core-rc2-table-name-pluralization
             modelBuilder.Entity<Persoon>().ToTable("Persoon");
             modelBuilder.Entity<SysteemGebruiker>().ToTable("SysteemGebruiker");
+        }
+
+        public override int SaveChanges()
+        {
+            var entriesAdded = ChangeTracker.Entries()
+                .Where(e => e.Entity == Persoon)
+                .Where(e => e.State == EntityState.Added);
+
+            foreach (var entry in entriesAdded)
+            {
+                var persoon = entry.Entity as Persoon;
+                persoon.AangemaaktOp = DateTime.UtcNow;
+            }
+            return base.SaveChanges();
         }
     }
 }

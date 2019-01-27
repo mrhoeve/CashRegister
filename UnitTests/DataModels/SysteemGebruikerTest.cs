@@ -15,7 +15,7 @@ namespace UnitTests.DataModels
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
             systeemGebruiker.Wachtwoord = SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID);
             // Make sure that our password hasn't been saved but the hash has.
-            Assert.IsFalse(systeemGebruiker.Wachtwoord.Equals(Definitions.TEST_PASSWORD_VALID));
+            Assert.IsFalse(Definitions.TEST_PASSWORD_VALID.Equals(systeemGebruiker.Wachtwoord));
             // Make sure it's a Argon2 hash
             Assert.IsTrue(systeemGebruiker.Wachtwoord.StartsWith("$argon2i$"));
             // Finally, check if the valid password is indeed valid
