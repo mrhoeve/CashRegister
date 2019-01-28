@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 
@@ -22,18 +23,17 @@ namespace UnitTests
         public void Setup()
         {
             // Initialise the lists
-            Persoon p3 = new Persoon() { Id = 3, Voornaam = "Bas", Tussenvoegsel = "", Achternaam = "Uurman", AangemaaktOp = DateTime.UtcNow };
             var personen = new List<Persoon>()
             {
-                new Persoon() { Id=1, Voornaam="Kees", Tussenvoegsel="", Achternaam="Kwakker", AangemaaktOp=DateTime.UtcNow },
+                new Persoon() { Id=1, Voornaam="Kees", Tussenvoegsel="", Achternaam="Kwakker", AangemaaktOp=DateTime.UtcNow, SysteemGebruiker=Definitions.localAdminS },
                 new Persoon() { Id=2, Voornaam="Joran", Tussenvoegsel="", Achternaam="Kloek", AangemaaktOp=DateTime.UtcNow },
-                p3
+                Definitions.localAdminP
             };
             var personenQueryable = personen.AsQueryable();
 
             var systeemGebruiker = new List<SysteemGebruiker>()
             {
-                new SysteemGebruiker() { Id=1, GebruikerId=p3.Id, Gebruiker=p3, Wachtwoord=SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID) }
+                Definitions.localAdminS
             };
             var systeemGebruikerQueryable = systeemGebruiker.AsQueryable();
 

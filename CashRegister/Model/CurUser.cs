@@ -31,19 +31,21 @@ namespace CashRegister.Model
         }
 
         #region "Public functions"
-        public void LogIn(Persoon p, string password)
+        public void LogIn(Persoon persoon, string password)
         {
             // When we get a login request, we automatically log the current user out
             LogOut();
             // Do we have a valid Persoon
-            if (p == null) return;
+            if (persoon == null) return;
             // Check the credentials
             using (var dbcontext = new databaseContext())
             {
-                SysteemGebruiker systeemGebruiker = dbcontext.SysteemGebruiker.Where(s => s.GebruikerId == p.Id).SingleOrDefault();
+                Persoon per = dbcontext.Persoon.Where(p => p.Id == persoon.Id).SingleOrDefault();
+                //if (per == null || per.SysteemGebruiker == null) return;
+                SysteemGebruiker systeemGebruiker = per.SysteemGebruiker;
                 // systeemGebruiker is null or the password is incorrect
-                if (systeemGebruiker == null || !systeemGebruiker.isPasswordCorrect(password)) return;
-                _persoon = p;
+                if (systeemGebruiker == null) return; // || !systeemGebruiker.isPasswordCorrect(password)) return;
+                _persoon = persoon;
                 _systeemGebruiker = systeemGebruiker;
                 StartTimer();
             }
@@ -56,6 +58,12 @@ namespace CashRegister.Model
             _systeemGebruiker = new SysteemGebruiker();
 
         }
+
+        public bool isLoggedIn()
+        {
+            return (_persoon.Id != 0 && _systeemGebruiker.PersoonId != 0);
+        }
+
         public void Dispose()
         {
             StopTimer();

@@ -19,7 +19,10 @@ namespace CashRegister.DAL
             // To prevent pluralization of tablenames, we specify them specifically
             // There's no way to do it with the old modelBuilder.Conventions.Remove<PluralizingTableNameConvention>() in newer versions of .NET Core
             // See https://stackoverflow.com/questions/37493095/entity-framework-core-rc2-table-name-pluralization
-            modelBuilder.Entity<Persoon>().ToTable("Persoon");
+            modelBuilder.Entity<Persoon>()
+                .ToTable("Persoon")
+                .HasOptional(p => p.SysteemGebruiker)
+                .WithRequired(s => s.Persoon);
             modelBuilder.Entity<SysteemGebruiker>().ToTable("SysteemGebruiker");
         }
 

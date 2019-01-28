@@ -18,14 +18,10 @@ namespace CashRegister.DataModels
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]      // https://stackoverflow.com/questions/5252979/assign-format-of-datetime-with-data-annotations
         public DateTime AangemaaktOp { get; set; }
-        [ForeignKey("Persoon")]
-        public int AangemaaktDoor { get; set; }
-        public virtual Persoon AangemaaktDoorPersoon { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]      // https://stackoverflow.com/questions/5252979/assign-format-of-datetime-with-data-annotations
         public DateTime? VerwijderdOp { get; set; }
-        [ForeignKey("Persoon")]
-        public int? VerwijderdDoor { get; set; }
-        public virtual Persoon VerwijderdDoorPersoon { get; set; }
+
+        public virtual SysteemGebruiker SysteemGebruiker { get; set; }
     }
 }
