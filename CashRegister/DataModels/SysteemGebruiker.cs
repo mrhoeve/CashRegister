@@ -1,10 +1,15 @@
 ﻿using CashRegister.Helpers;
+using CashRegister.License;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+// Class uses BCrypt via NuGet for password hashing
+// Source and documentation: https://github.com/BcryptNet/bcrypt.net
+
 namespace CashRegister.DataModels
 {
+    [UsesOSS(packageName:"BCrypt", URL:"https://github.com/BcryptNet/bcrypt.net", InternalTextFile:"BCrypt.txt")]
     public class SysteemGebruiker
     {
         [Key, ForeignKey("Persoon")]
@@ -19,12 +24,12 @@ namespace CashRegister.DataModels
         public bool isPasswordCorrect(String password)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(Wachtwoord)) return false;
-            return this.Wachtwoord.Equals(password);
+            return BCrypt.Net.BCrypt.Verify(password,this.Wachtwoord);
         }
 
         public static string validateAndHashPassword (string password)
         {
-            return (password.isValid() ? password : "");
+            return password.isValid() ? BCrypt.Net.BCrypt.HashPassword(password) : "";
         }
     }
 }

@@ -15,7 +15,9 @@ namespace UnitTests.DataModels
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
             systeemGebruiker.Wachtwoord = SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID);
             // Make sure that our password hasn't been saved but the hash has.
-            //Assert.IsFalse(Definitions.TEST_PASSWORD_VALID.Equals(systeemGebruiker.Wachtwoord));
+            Assert.IsFalse(Definitions.TEST_PASSWORD_VALID.Equals(systeemGebruiker.Wachtwoord));
+            // Make sure the password begins with $2a$
+            Assert.IsTrue(systeemGebruiker.Wachtwoord.StartsWith("$2a$"));
             // Finally, check if the valid password is indeed valid
             Assert.IsTrue(systeemGebruiker.isPasswordCorrect(Definitions.TEST_PASSWORD_VALID));
         }
@@ -37,7 +39,9 @@ namespace UnitTests.DataModels
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
             systeemGebruiker.Wachtwoord = SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID);
             // Make sure that our password hasn't been saved but the hash has.
-            // Assert.IsFalse(systeemGebruiker.Wachtwoord.Equals(Definitions.TEST_PASSWORD_VALID));
+            Assert.IsFalse(systeemGebruiker.Wachtwoord.Equals(Definitions.TEST_PASSWORD_VALID));
+            // Make sure the password begins with $2a$
+            Assert.IsTrue(systeemGebruiker.Wachtwoord.StartsWith("$2a$"));
             // Now, check with a different password (just add # to the used string)
             Assert.IsFalse(systeemGebruiker.isPasswordCorrect(Definitions.TEST_PASSWORD_VALID + "#"));
         }

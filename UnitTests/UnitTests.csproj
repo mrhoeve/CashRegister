@@ -113,6 +113,7 @@
     <Compile Include="DataModels\SysteemGebruikerTest.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Helpers\PasswordHelperTest.cs" />
+    <Compile Include="License\LicenseTest.cs" />
     <Compile Include="Model\CurUserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
