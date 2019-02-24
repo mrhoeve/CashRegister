@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CashRegister.Helpers;
 
 namespace CashRegister.License
 {
@@ -14,26 +15,14 @@ namespace CashRegister.License
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
         public static readonly License Registration = new License();
 
-        private SortedList<string, LicenseInformation> licenseInformation;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private SortedList<string, OpenSourceInformation> licenseInformation;
 
         private License()
         {
-            licenseInformation = new SortedList<string, LicenseInformation>();
-        }
-
-        public void Register(string packageName, string URL, string InternalTextFile)
-        {
-            // Is everything known? So not, throw an error
-            if (string.IsNullOrEmpty(packageName) ||
-                string.IsNullOrEmpty(URL) ||
-                string.IsNullOrEmpty(InternalTextFile)) throw new ArgumentException("Required element not present");
-            // Check if the package is already registered
-            // If so, we're not going to throw errors because multiple parts can use the same open source software
-            if (licenseInformation.ContainsKey(packageName)) return;
-
-            // Register the information
-            licenseInformation.Add(packageName,
-                new LicenseInformation(packageName, URL, InternalTextFile));
+            licenseInformation = new SortedList<string, OpenSourceInformation>();
+            generateList();
         }
 
         public IList<string> GetPackages()
@@ -49,16 +38,23 @@ namespace CashRegister.License
 
         public string GetEmbeddedLicenseFile(string packageName)
         {
+            Console.WriteLine($"Package: {packageName}");
             if (!licenseInformation.Keys.Contains(packageName)) throw new ArgumentException($"Package name {packageName} not found");
             var _assembly = Assembly.GetExecutingAssembly();
             string fileContents = "";
             try
             {
-                fileContents = new StreamReader(_assembly.GetManifestResourceStream(_assembly.GetManifestResourceNames().Single(str => str.EndsWith(licenseInformation[packageName].txtFile)))).ReadToEnd();
+                using (StreamReader reader = new StreamReader(_assembly.GetManifestResourceStream(_assembly.GetManifestResourceNames().Single(str => str.EndsWith(licenseInformation[packageName].InternalTextFile))))) {
+                    fileContents = reader.ReadToEnd();
+                    Console.WriteLine(fileContents);
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                if (e.GetType() == typeof(InvalidOperationException))
+                    logger.Error($"InvalidOperationException: is the Build Action of file {licenseInformation[packageName].InternalTextFile} set to Embedded Resource?");
             }
+            Console.WriteLine($"{fileContents}");
             return fileContents;
         }
 
@@ -67,18 +63,20 @@ namespace CashRegister.License
             return Assembly.GetExecutingAssembly().ToString(); 
         }
 
-        private class LicenseInformation
+        private void generateList()
         {
-            public string PackageName;
-            public string URL;
-            public string txtFile;
-
-            public LicenseInformation(string packageName, string URL, string txtFile)
+            LicenseHelper licenseHelper = new LicenseHelper();
+            OpenSourceInformation osi;
+            foreach(Type type in licenseHelper.usesOSS)
             {
-                this.PackageName = packageName;
-                this.URL = URL;
-                this.txtFile = txtFile;
+                IUsesOSS usesOSS = (IUsesOSS)Activator.CreateInstance(type);
+                osi = usesOSS.getOpenSourceInformation();
+                licenseInformation.Add(osi.packageName, osi);
             }
+            //foreach(IUsesOSS usesOSS in licenseHelper.usesOSS)
+            //{
+            //}
+
         }
     }
 }

@@ -15,6 +15,16 @@ namespace CashRegister
         public Form1()
         {
             InitializeComponent();
+
+            IList<string> lijst = License.License.Registration.GetPackages();
+            foreach(string item in lijst)
+            {
+                //this.Controls.Add(new Label() { Text=item } );
+                //this.Controls.Add(new Label() { Text = "\n" });
+                this.Controls.Add(new Label() { Text = "|" + License.License.Registration.GetEmbeddedLicenseFile(item) });
+            }
+            //Assert.AreEqual("https://opensource.org/", CashRegister.License.License.Registration.GetURLForPackage(lijst[1]));
+
         }
     }
 }

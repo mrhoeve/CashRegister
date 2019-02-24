@@ -9,8 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CashRegister.DataModels
 {
-    [UsesOSS(packageName:"BCrypt", URL:"https://github.com/BcryptNet/bcrypt.net", InternalTextFile:"BCrypt.txt")]
-    public class SysteemGebruiker
+    public class SysteemGebruiker : IUsesOSS
     {
         [Key, ForeignKey("Persoon")]
         public int PersoonId { get; set; }
@@ -30,6 +29,11 @@ namespace CashRegister.DataModels
         public static string validateAndHashPassword (string password)
         {
             return password.isValid() ? BCrypt.Net.BCrypt.HashPassword(password) : "";
+        }
+
+        public OpenSourceInformation getOpenSourceInformation()
+        {
+            return new OpenSourceInformation("BCrypt", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.txt");
         }
     }
 }
