@@ -1,28 +1,33 @@
-﻿using System;
+﻿using CashRegister.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using CashRegister.Helpers;
 
 namespace CashRegister.License
 {
     public sealed class License
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private SortedList<string, OpenSourceInformation> licenseInformation = new SortedList<string, OpenSourceInformation>();
+
         // Make sure we only get one instance of this class
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
+        // Make sure we initialise this as the last initialisation of this class!
+        // The logger i.e. must be initialised first to prevent NPE's.
         public static readonly License Registration = new License();
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
-        private SortedList<string, OpenSourceInformation> licenseInformation;
 
         private License()
         {
-            licenseInformation = new SortedList<string, OpenSourceInformation>();
             generateList();
+            if (licenseInformation.Count != 0)
+                logger.Info($"This application uses {licenseInformation.Count} Open Source software projects.");
+        }
+
+        public Object getInstance()
+        {
+            return Registration;
         }
 
         public IList<string> GetPackages()
@@ -60,23 +65,24 @@ namespace CashRegister.License
 
         public string GetAssembly()
         {
-            return Assembly.GetExecutingAssembly().ToString(); 
+            return Assembly.GetExecutingAssembly().ToString();
         }
 
         private void generateList()
         {
             LicenseHelper licenseHelper = new LicenseHelper();
-            OpenSourceInformation osi;
-            foreach(Type type in licenseHelper.usesOSS)
-            {
-                IUsesOSS usesOSS = (IUsesOSS)Activator.CreateInstance(type);
-                osi = usesOSS.getOpenSourceInformation();
-                licenseInformation.Add(osi.packageName, osi);
-            }
-            //foreach(IUsesOSS usesOSS in licenseHelper.usesOSS)
-            //{
-            //}
+            List<OpenSourceInformation> osiList;
+            IUsesOSS usesOSS;
 
+            // First, get the non-singletons
+            foreach (Type type in licenseHelper.usesOSS)
+            {
+                usesOSS = (IUsesOSS)Activator.CreateInstance(type);
+                osiList = usesOSS.getOpenSourceInformation();
+                foreach (OpenSourceInformation osi in osiList)
+                    if (!licenseInformation.Keys.Contains(osi.packageName))
+                        licenseInformation.Add(osi.packageName, osi);
+            }
         }
     }
 }

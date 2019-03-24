@@ -1,6 +1,7 @@
 ﻿using CashRegister.Helpers;
 using CashRegister.License;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,9 +32,9 @@ namespace CashRegister.DataModels
             return password.isValid() ? BCrypt.Net.BCrypt.HashPassword(password) : "";
         }
 
-        public OpenSourceInformation getOpenSourceInformation()
+        public List<OpenSourceInformation> getOpenSourceInformation()
         {
-            return new OpenSourceInformation("BCrypt", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.txt");
+            return new OpenSourceInformation("BCrypt", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.txt").singleList();
         }
     }
 }

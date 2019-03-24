@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CashRegister.License
 {
@@ -17,6 +13,14 @@ namespace CashRegister.License
             this.packageName = packageName;
             this.URL = URL;
             this.InternalTextFile = InternalTextFile;
+        }
+    }
+
+    public static class OpenSourceInformationHelper
+    {
+        public static List<OpenSourceInformation> singleList(this OpenSourceInformation osi)
+        {
+            return new List<OpenSourceInformation> { osi };
         }
     }
 }
