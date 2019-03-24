@@ -1,8 +1,8 @@
 ﻿using CashRegister.DAL;
 using CashRegister.DataModels;
 using System;
-using System.Timers;
 using System.Linq;
+using System.Timers;
 
 namespace CashRegister.Model
 {
@@ -61,6 +61,7 @@ namespace CashRegister.Model
 
         public bool isLoggedIn()
         {
+            _timer.Reset();
             return (_persoon.Id != 0 && _systeemGebruiker.PersoonId != 0);
         }
 
@@ -80,7 +81,7 @@ namespace CashRegister.Model
 
         private void StartTimer()
         {
-            if(!_timer.Enabled)
+            if (!_timer.Enabled)
             {
                 _timer.Interval = _timerInterval.TotalMilliseconds;
                 _timer.Enabled = true;
@@ -89,7 +90,7 @@ namespace CashRegister.Model
 
         private void StopTimer()
         {
-            if(_timer.Enabled)
+            if (_timer.Enabled)
             {
                 _timer.Stop();
             }
@@ -100,5 +101,15 @@ namespace CashRegister.Model
             curUser.LogOut();
 
         #endregion
+
+    }
+
+    internal static class TimerHelper
+    {
+        public static void Reset(this Timer timer)
+        {
+            timer.Stop();
+            timer.Start();
+        }
     }
 }

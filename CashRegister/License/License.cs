@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace CashRegister.License
 {
@@ -49,7 +50,8 @@ namespace CashRegister.License
             string fileContents = "";
             try
             {
-                using (StreamReader reader = new StreamReader(_assembly.GetManifestResourceStream(_assembly.GetManifestResourceNames().Single(str => str.EndsWith(licenseInformation[packageName].InternalTextFile))))) {
+                using (StreamReader reader = new StreamReader(_assembly.GetManifestResourceStream(_assembly.GetManifestResourceNames().Single(str => str.EndsWith(licenseInformation[packageName].InternalTextFile)))))
+                {
                     fileContents = reader.ReadToEnd();
                     Console.WriteLine(fileContents);
                 }
@@ -70,6 +72,7 @@ namespace CashRegister.License
 
         private void generateList()
         {
+            StringBuilder stringBuilder = new StringBuilder();
             LicenseHelper licenseHelper = new LicenseHelper();
             List<OpenSourceInformation> osiList;
             IUsesOSS usesOSS;
@@ -78,10 +81,16 @@ namespace CashRegister.License
             foreach (Type type in licenseHelper.usesOSS)
             {
                 usesOSS = (IUsesOSS)Activator.CreateInstance(type);
+                stringBuilder.Clear();
+                stringBuilder.Append($"{type.Name} provided the following OSS:");
                 osiList = usesOSS.getOpenSourceInformation();
                 foreach (OpenSourceInformation osi in osiList)
+                {
+                    stringBuilder.Append($" {osi.packageName}");
                     if (!licenseInformation.Keys.Contains(osi.packageName))
                         licenseInformation.Add(osi.packageName, osi);
+                }
+                logger.Debug(stringBuilder.ToString());
             }
         }
     }
