@@ -1,15 +1,15 @@
 ﻿using CashRegister.DataModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTests.DataModels
 {
     /// <summary>
     /// Summary description for SysteemGebruiker
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class SysteemGebruikerTest
     {
-        [TestMethod]
+        [Test]
         public void test_isPasswordCorrect_UseValidPassword_ExpectTrue()
         {
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
@@ -22,7 +22,7 @@ namespace UnitTests.DataModels
             Assert.IsTrue(systeemGebruiker.isPasswordCorrect(Definitions.TEST_PASSWORD_VALID));
         }
 
-        [TestMethod]
+        [Test]
         public void test_isPasswordCorrect_UseInvalidPassword_ExpectEmptyStringInPasswordAndFailedComparison()
         {
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
@@ -33,7 +33,7 @@ namespace UnitTests.DataModels
             Assert.IsFalse(systeemGebruiker.isPasswordCorrect(Definitions.TEST_PASSWORD_TOOSHORT));
         }
 
-        [TestMethod]
+        [Test]
         public void test_isPasswordCorrect_UseDifferentPasswordToCheck_ExpectFalse()
         {
             SysteemGebruiker systeemGebruiker = new SysteemGebruiker();
