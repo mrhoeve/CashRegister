@@ -151,6 +151,7 @@
     <Compile Include="License\ucLicenseForm.Designer.cs">
       <DependentUpon>ucLicenseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="License\UnitTestsOSSHelper.cs" />
     <Compile Include="License\UsesOSS.cs" />
     <Compile Include="License\License.cs" />
     <Compile Include="Model\CurUser.cs" />
@@ -177,6 +178,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="License\License\NLog.txt" />
+    <EmbeddedResource Include="License\License\NUnit.txt" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
