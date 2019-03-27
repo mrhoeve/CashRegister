@@ -1,12 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CashRegister.Model;
+﻿using CashRegister.DAL;
 using CashRegister.DataModels;
+using CashRegister.Model;
 using NUnit.Framework;
-using Moq;
 using System.Linq;
+using UnitTests.DAL;
 
 namespace UnitTests.Model
 {
@@ -14,7 +11,7 @@ namespace UnitTests.Model
     /// Summary description for CurUserTest
     /// </summary>
     [TestFixture]
-    public class CurUserTest : BaseTest
+    public class CurUserTest : MockEntityFramework
     {
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutLoggingIn_ExpectFalse()
@@ -32,9 +29,24 @@ namespace UnitTests.Model
         }
 
         [Test]
+        public void test_isLoggedIn_NewInstanceWithoutRightCredentials_ExpectFalse()
+        {
+            CurUser curUser = CurUser.curUser;
+            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALIDFORMAT_INVALIDPASSWORD);
+            Assert.IsFalse(curUser.isLoggedIn());
+        }
+
+        [Test]
+        public void sgtest()
+        {
+            SysteemGebruiker sg = Context.getInstance().Get().Persoon.Where(p => p.Id == Definitions.localAdminP.Id).SingleOrDefault().SysteemGebruiker;
+            Assert.IsTrue(sg != null);
+        }
+
+        [Test]
         public void test()
         {
-            var sg = MockContext.Object.Persoon.Where(p => p.Id == Definitions.localAdminP.Id).SingleOrDefault();
+            Persoon sg = Context.getInstance().Get().Persoon.Where(p => p.Id == Definitions.localAdminP.Id).SingleOrDefault();
             Assert.IsTrue(sg!=null);
         }
     }

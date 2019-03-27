@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace CashRegister.DAL
 {
-    public class databaseContext : DbContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
-        public DbSet<Persoon> Persoon { get; set; }
-        public DbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
+        public IDbSet<Persoon> Persoon { get; set; }
+        public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

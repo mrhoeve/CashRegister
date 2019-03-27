@@ -16,6 +16,7 @@ namespace CashRegister.Model
         private SysteemGebruiker _systeemGebruiker { get; set; }
         private TimeSpan _timerInterval { get; set; }
         private Timer _timer;
+        private IDatabaseContext _context;
 
         // Constructor, hidden because we only want one instance
         private CurUser()
@@ -35,20 +36,19 @@ namespace CashRegister.Model
         {
             // When we get a login request, we automatically log the current user out
             LogOut();
+            // Do we have a valid context
+            if (_context == null) getContext();
             // Do we have a valid Persoon
             if (persoon == null) return;
             // Check the credentials
-            using (var dbcontext = new databaseContext())
-            {
-                Persoon per = dbcontext.Persoon.Where(p => p.Id == persoon.Id).SingleOrDefault();
-                //if (per == null || per.SysteemGebruiker == null) return;
-                SysteemGebruiker systeemGebruiker = per.SysteemGebruiker;
-                // systeemGebruiker is null or the password is incorrect
-                if (systeemGebruiker == null) return; // || !systeemGebruiker.isPasswordCorrect(password)) return;
-                _persoon = persoon;
-                _systeemGebruiker = systeemGebruiker;
-                StartTimer();
-            }
+            Persoon per = _context.Persoon.Where(p => p.Id == persoon.Id).SingleOrDefault();
+            if (per == null || per.SysteemGebruiker == null) return;
+            SysteemGebruiker systeemGebruiker = per.SysteemGebruiker;
+            // systeemGebruiker is null or the password is incorrect
+            if (!systeemGebruiker.isPasswordCorrect(password)) return;
+            _persoon = persoon;
+            _systeemGebruiker = systeemGebruiker;
+            StartTimer();
         }
 
         public void LogOut()
@@ -72,6 +72,11 @@ namespace CashRegister.Model
             curUser.Dispose();
         }
         #endregion
+
+        private void getContext()
+        {
+            _context = Context.getInstance().Get();
+        }
 
         #region "Timer functions"
         private void SetTimerInterval(TimeSpan newInterval)

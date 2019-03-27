@@ -13,7 +13,11 @@ namespace CashRegister.License
     {
         public List<OpenSourceInformation> getOpenSourceInformation()
         {
-            return new OpenSourceInformation("NUnit", "https://github.com/nunit/nunit", "NUnit.txt").singleList();
+            return new List<OpenSourceInformation>()
+            {
+                new OpenSourceInformation("NUnit", "https://github.com/nunit/nunit", "NUnit.txt"),
+                new OpenSourceInformation("NSubstitute", "https://github.com/nsubstitute/NSubstitute", "NSubstitute.txt")
+            };
         }
 
     }
