@@ -94,7 +94,7 @@ namespace UnitTests.DAL
                 AangemaaktOp = DateTime.UtcNow.AddDays(-1)
             };
             ICollection<ProductPrijs> product2Prijzen = new List<ProductPrijs>() { product2Prijs1, product2Prijs2 };
-            product2.ProductPrijzen = product1Prijzen;
+            product2.ProductPrijzen = product2Prijzen;
 
             var inMemoryProducten = new FakeDbSet<Product>
             {
