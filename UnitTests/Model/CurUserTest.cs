@@ -1,9 +1,7 @@
-﻿using CashRegister.DAL;
-using CashRegister.DataModels;
+﻿using CashRegister.DataModels;
 using CashRegister.Model;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using UnitTests.DAL;
@@ -20,6 +18,14 @@ namespace UnitTests.Model
         public void test_isLoggedIn_NewInstanceWithoutLoggingIn_ExpectFalse()
         {
             CurUser curUser = CurUser.curUser;
+            Assert.IsFalse(curUser.isLoggedIn());
+        }
+
+        [Test]
+        public void test_isLoggedIn_NewInstanceWithoutPersoonOrPassword_ExpectFalse()
+        {
+            CurUser curUser = CurUser.curUser;
+            curUser.LogIn(null,null);
             Assert.IsFalse(curUser.isLoggedIn());
         }
 
@@ -57,8 +63,9 @@ namespace UnitTests.Model
             CurUser curUser = CurUser.curUser;
             object o = curUser;
             var t = typeof(CurUser);
-            // Change the private (!!) property from the initial 5 minutes to 3 seconds
-            t.GetProperty("_timerInterval", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(o, TimeSpan.FromSeconds(3));
+            // Call the private (!!) method to change the timerinterval from the initial 5 minutes to 3 seconds
+            t.GetMethod("SetTimerInterval", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(o, new object[] { TimeSpan.FromSeconds(3) });
             // Log in with the right credentials
             curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
             for (int i = 0; i < 10; i++)
@@ -83,17 +90,11 @@ namespace UnitTests.Model
         }
 
         [Test]
-        public void sgtest()
+        public void test_isLoggedIn_NewInstanceWithoutExistingUserUsingCorrectPassword_ExpectFalse()
         {
-            SysteemGebruiker sg = Context.getInstance().Get().Persoon.Where(p => p.Id == Definitions.localAdminP.Id).SingleOrDefault().SysteemGebruiker;
-            Assert.IsTrue(sg != null);
-        }
-
-        [Test]
-        public void test()
-        {
-            Persoon sg = Context.getInstance().Get().Persoon.Where(p => p.Id == Definitions.localAdminP.Id).SingleOrDefault();
-            Assert.IsTrue(sg != null);
+            CurUser curUser = CurUser.curUser;
+            curUser.LogIn(new Persoon(), Definitions.TEST_PASSWORD_VALID);
+            Assert.IsFalse(curUser.isLoggedIn());
         }
     }
 }

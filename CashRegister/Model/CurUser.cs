@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace CashRegister.Model
 {
-    public sealed class CurUser : IDisposable
+    public sealed class CurUser
     {
         // Make sure we only get one instance of this class
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
@@ -63,13 +63,6 @@ namespace CashRegister.Model
         {
             _timer.Reset();
             return (_persoon.Id != 0 && _systeemGebruiker.PersoonId != 0);
-        }
-
-        public void Dispose()
-        {
-            StopTimer();
-            _timer.Dispose();
-            curUser.Dispose();
         }
         #endregion
 
