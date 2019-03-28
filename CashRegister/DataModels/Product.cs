@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using CashRegister.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace CashRegister.DataModels
 {
@@ -25,13 +23,6 @@ namespace CashRegister.DataModels
         {
             return ProductPrijzen.Where(p => p.GeldigVan.Date <= date.Date && (p.GeldigTot == null || p.GeldigTot.getDate() >= date.Date ))
                 .SingleOrDefault();
-        }
-    }
-
-    public static class DateTimeHelper {
-        public static DateTime getDate(this DateTime? date)
-        {
-            return date ?? DateTime.Now;
         }
     }
 }

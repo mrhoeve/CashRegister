@@ -19,6 +19,7 @@ namespace UnitTests
         public const string TEST_PASSWORD_VALID = "ABCdef12";
         public const string TEST_PASSWORD_VALIDFORMAT_INVALIDPASSWORD = "abcDEF12";
 
+        // Testing products
         public static Product product1 = new Product() { Id = 1, Productomschrijving = "Product 1" };
         public static ProductPrijs product1Prijs1 = new ProductPrijs()
         {
