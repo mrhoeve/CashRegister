@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="DAL\MockEntityFramework.cs" />
     <Compile Include="DAL\FakeDbSet.cs" />
+    <Compile Include="DataModels\ProductTest.cs" />
     <Compile Include="DataModels\SysteemGebruikerTest.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Helpers\PasswordHelperTest.cs" />

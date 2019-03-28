@@ -9,6 +9,8 @@ namespace CashRegister.DAL
     {
         public IDbSet<Persoon> Persoon { get; set; }
         public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
+        public IDbSet<Product> Product { get; set; }
+        public IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -21,6 +23,11 @@ namespace CashRegister.DAL
                 .HasOptional(p => p.SysteemGebruiker)
                 .WithRequired(s => s.Persoon);
             modelBuilder.Entity<SysteemGebruiker>().ToTable("SysteemGebruiker");
+            modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<ProductPrijs>()
+                .ToTable("ProductPrijs")
+                .HasRequired(p => p.Product);
+
         }
 
         public override int SaveChanges()
@@ -33,6 +40,16 @@ namespace CashRegister.DAL
             {
                 var persoon = entry.Entity as Persoon;
                 persoon.AangemaaktOp = DateTime.UtcNow;
+            }
+
+            var productPrijzen = ChangeTracker.Entries()
+                .Where(e => e.Entity == ProductPrijs)
+                .Where(e => e.State == EntityState.Added);
+
+            foreach (var entry in productPrijzen)
+            {
+                var productPrijs = entry.Entity as ProductPrijs;
+                productPrijs.AangemaaktOp = DateTime.Now;
             }
             return base.SaveChanges();
         }

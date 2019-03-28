@@ -7,6 +7,8 @@ namespace CashRegister.DAL
     {
         IDbSet<Persoon> Persoon { get; set; }
         IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
+        IDbSet<Product> Product { get; set; }
+        IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
     }
 }

@@ -31,16 +31,16 @@
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pictureLogoOSS = new System.Windows.Forms.PictureBox();
-            this.tableLayoutClose = new System.Windows.Forms.TableLayoutPanel();
-            this.btnClose = new System.Windows.Forms.Button();
             this.tableLayoutHeaderTitle = new System.Windows.Forms.TableLayoutPanel();
             this.lblHeaderTitleCaption = new System.Windows.Forms.Label();
             this.lblHeaderTitleSub = new System.Windows.Forms.Label();
+            this.tableLayoutClose = new System.Windows.Forms.TableLayoutPanel();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tableLayoutMain.SuspendLayout();
             this.tableLayoutHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogoOSS)).BeginInit();
-            this.tableLayoutClose.SuspendLayout();
             this.tableLayoutHeaderTitle.SuspendLayout();
+            this.tableLayoutClose.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutMain
@@ -59,7 +59,7 @@
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutMain.Size = new System.Drawing.Size(566, 453);
+            this.tableLayoutMain.Size = new System.Drawing.Size(616, 453);
             this.tableLayoutMain.TabIndex = 0;
             // 
             // tableLayoutHeader
@@ -76,7 +76,7 @@
             this.tableLayoutHeader.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.tableLayoutHeader.RowCount = 1;
             this.tableLayoutHeader.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutHeader.Size = new System.Drawing.Size(566, 100);
+            this.tableLayoutHeader.Size = new System.Drawing.Size(616, 100);
             this.tableLayoutHeader.TabIndex = 0;
             // 
             // pictureLogoOSS
@@ -93,13 +93,50 @@
             this.pictureLogoOSS.TabIndex = 0;
             this.pictureLogoOSS.TabStop = false;
             // 
+            // tableLayoutHeaderTitle
+            // 
+            this.tableLayoutHeaderTitle.ColumnCount = 1;
+            this.tableLayoutHeaderTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutHeaderTitle.Controls.Add(this.lblHeaderTitleCaption, 0, 0);
+            this.tableLayoutHeaderTitle.Controls.Add(this.lblHeaderTitleSub, 0, 1);
+            this.tableLayoutHeaderTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutHeaderTitle.Location = new System.Drawing.Point(103, 0);
+            this.tableLayoutHeaderTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutHeaderTitle.Name = "tableLayoutHeaderTitle";
+            this.tableLayoutHeaderTitle.RowCount = 2;
+            this.tableLayoutHeaderTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutHeaderTitle.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutHeaderTitle.Size = new System.Drawing.Size(510, 100);
+            this.tableLayoutHeaderTitle.TabIndex = 1;
+            // 
+            // lblHeaderTitleCaption
+            // 
+            this.lblHeaderTitleCaption.AutoSize = true;
+            this.lblHeaderTitleCaption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeaderTitleCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderTitleCaption.Location = new System.Drawing.Point(3, 0);
+            this.lblHeaderTitleCaption.Name = "lblHeaderTitleCaption";
+            this.lblHeaderTitleCaption.Size = new System.Drawing.Size(504, 30);
+            this.lblHeaderTitleCaption.TabIndex = 0;
+            this.lblHeaderTitleCaption.Text = "Gebruikte Open Source software";
+            // 
+            // lblHeaderTitleSub
+            // 
+            this.lblHeaderTitleSub.AutoSize = true;
+            this.lblHeaderTitleSub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeaderTitleSub.Location = new System.Drawing.Point(3, 30);
+            this.lblHeaderTitleSub.Name = "lblHeaderTitleSub";
+            this.lblHeaderTitleSub.Size = new System.Drawing.Size(504, 70);
+            this.lblHeaderTitleSub.TabIndex = 1;
+            this.lblHeaderTitleSub.Text = "label1";
+            // 
             // tableLayoutClose
             // 
             this.tableLayoutClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutClose.ColumnCount = 1;
             this.tableLayoutClose.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutClose.Controls.Add(this.btnClose, 0, 0);
-            this.tableLayoutClose.Location = new System.Drawing.Point(494, 468);
+            this.tableLayoutClose.Location = new System.Drawing.Point(544, 468);
             this.tableLayoutClose.Name = "tableLayoutClose";
             this.tableLayoutClose.RowCount = 1;
             this.tableLayoutClose.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -115,48 +152,11 @@
             this.btnClose.Text = "Sluiten";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutHeaderTitle
-            // 
-            this.tableLayoutHeaderTitle.ColumnCount = 1;
-            this.tableLayoutHeaderTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutHeaderTitle.Controls.Add(this.lblHeaderTitleCaption, 0, 0);
-            this.tableLayoutHeaderTitle.Controls.Add(this.lblHeaderTitleSub, 0, 1);
-            this.tableLayoutHeaderTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutHeaderTitle.Location = new System.Drawing.Point(103, 0);
-            this.tableLayoutHeaderTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutHeaderTitle.Name = "tableLayoutHeaderTitle";
-            this.tableLayoutHeaderTitle.RowCount = 2;
-            this.tableLayoutHeaderTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutHeaderTitle.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutHeaderTitle.Size = new System.Drawing.Size(460, 100);
-            this.tableLayoutHeaderTitle.TabIndex = 1;
-            // 
-            // lblHeaderTitleCaption
-            // 
-            this.lblHeaderTitleCaption.AutoSize = true;
-            this.lblHeaderTitleCaption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeaderTitleCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderTitleCaption.Location = new System.Drawing.Point(3, 0);
-            this.lblHeaderTitleCaption.Name = "lblHeaderTitleCaption";
-            this.lblHeaderTitleCaption.Size = new System.Drawing.Size(454, 30);
-            this.lblHeaderTitleCaption.TabIndex = 0;
-            this.lblHeaderTitleCaption.Text = "Gebruikte Open Source software";
-            // 
-            // lblHeaderTitleSub
-            // 
-            this.lblHeaderTitleSub.AutoSize = true;
-            this.lblHeaderTitleSub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHeaderTitleSub.Location = new System.Drawing.Point(3, 30);
-            this.lblHeaderTitleSub.Name = "lblHeaderTitleSub";
-            this.lblHeaderTitleSub.Size = new System.Drawing.Size(454, 70);
-            this.lblHeaderTitleSub.TabIndex = 1;
-            this.lblHeaderTitleSub.Text = "label1";
-            // 
             // formUsesOSS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 511);
+            this.ClientSize = new System.Drawing.Size(634, 511);
             this.Controls.Add(this.tableLayoutMain);
             this.Controls.Add(this.tableLayoutClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -167,9 +167,9 @@
             this.tableLayoutMain.ResumeLayout(false);
             this.tableLayoutHeader.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogoOSS)).EndInit();
-            this.tableLayoutClose.ResumeLayout(false);
             this.tableLayoutHeaderTitle.ResumeLayout(false);
             this.tableLayoutHeaderTitle.PerformLayout();
+            this.tableLayoutClose.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
