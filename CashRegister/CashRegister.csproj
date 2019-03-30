@@ -186,9 +186,6 @@
     <EmbeddedResource Include="License\License\NLog.txt" />
     <EmbeddedResource Include="License\License\NUnit.txt" />
     <EmbeddedResource Include="License\License\NSubstitute.txt" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

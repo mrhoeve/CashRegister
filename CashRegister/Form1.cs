@@ -19,14 +19,6 @@ namespace CashRegister
         {
             InitializeComponent();
             this.table.Controls.Add(new ucLicenseForm() { Dock=DockStyle.Fill });
-
-            IList<string> lijst = License.License.Registration.GetPackages();
-            foreach(string item in lijst)
-            {
-                //this.Controls.Add(new Label() { Text=item } );
-                //this.Controls.Add(new Label() { Text = "\n" });
-                this.Controls.Add(new Label() { Text = "|" + License.License.Registration.GetEmbeddedLicenseFile(item) });
-            }
             formUsesOSS form = new formUsesOSS();
             form.ShowDialog();
             //Assert.AreEqual("https://opensource.org/", CashRegister.License.License.Registration.GetURLForPackage(lijst[1]));
