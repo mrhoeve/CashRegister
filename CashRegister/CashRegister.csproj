@@ -132,6 +132,7 @@
     <Compile Include="DataModels\Product.cs" />
     <Compile Include="DataModels\ProductPrijs.cs" />
     <Compile Include="DataModels\SysteemGebruiker.cs" />
+    <Compile Include="Enum\NameOrder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

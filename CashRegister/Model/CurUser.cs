@@ -3,6 +3,7 @@ using CashRegister.DataModels;
 using System;
 using System.Linq;
 using System.Timers;
+using CashRegister.Enum;
 
 namespace CashRegister.Model
 {
@@ -11,6 +12,7 @@ namespace CashRegister.Model
         // Make sure we only get one instance of this class
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
         public static readonly CurUser curUser = new CurUser();
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private Persoon _persoon { get; set; }
         private SysteemGebruiker _systeemGebruiker { get; set; }
@@ -48,12 +50,14 @@ namespace CashRegister.Model
             if (!systeemGebruiker.isPasswordCorrect(password)) return;
             _persoon = persoon;
             _systeemGebruiker = systeemGebruiker;
+            logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged in.");
             StartTimer();
         }
 
         public void LogOut()
         {
             StopTimer();
+            logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged out.");
             _persoon = new Persoon();
             _systeemGebruiker = new SysteemGebruiker();
 
@@ -61,21 +65,17 @@ namespace CashRegister.Model
 
         public bool isLoggedIn()
         {
-            _timer.Reset();
+            if(_timer.Enabled) _timer.Reset();
             return (_persoon.Id != 0 && _systeemGebruiker.PersoonId != 0);
         }
         #endregion
 
-        private void getContext()
-        {
+        private void getContext() =>
             _context = Context.getInstance().Get();
-        }
 
         #region "Timer functions"
-        private void SetTimerInterval(TimeSpan newInterval)
-        {
+        private void SetTimerInterval(TimeSpan newInterval) =>
             this._timerInterval = newInterval;
-        }
 
         private void StartTimer()
         {

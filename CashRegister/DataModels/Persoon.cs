@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CashRegister.Enum;
 
 namespace CashRegister.DataModels
 {
@@ -23,5 +19,25 @@ namespace CashRegister.DataModels
         public DateTime? VerwijderdOp { get; set; }
 
         public virtual SysteemGebruiker SysteemGebruiker { get; set; }
+
+        public string GetVolledigeNaam(NameOrder nameOrder = NameOrder.Lastname)
+        {
+            switch (nameOrder)
+            {
+                case NameOrder.Firstname:
+                    if (string.IsNullOrEmpty(Tussenvoegsel))
+                        return $"{Voornaam} {Achternaam}";
+                    else
+                        return $"{Voornaam} {Tussenvoegsel} {Achternaam}";
+                    break;
+                default:
+                    if (string.IsNullOrEmpty(Tussenvoegsel))
+                        return $"{Achternaam}, {Voornaam}";
+                    else
+                        return $"{Achternaam}, {Voornaam} {Tussenvoegsel}";
+                    break;
+                
+            }
+        }
     }
 }
