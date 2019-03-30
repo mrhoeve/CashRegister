@@ -23,7 +23,7 @@ namespace CashRegister.License
         {
             generateList();
             if (licenseInformation.Count != 0)
-                logger.Info($"This application uses {licenseInformation.Count} Open Source software projects.");
+                logger.Debug($"This application uses {licenseInformation.Count} Open Source software projects.");
         }
 
         public Object getInstance()
@@ -44,7 +44,6 @@ namespace CashRegister.License
 
         public string GetEmbeddedLicenseFile(string packageName)
         {
-            Console.WriteLine($"Package: {packageName}");
             if (!licenseInformation.Keys.Contains(packageName)) throw new ArgumentException($"Package name {packageName} not found");
             var _assembly = Assembly.GetExecutingAssembly();
             string fileContents = "";
@@ -53,7 +52,6 @@ namespace CashRegister.License
                 using (StreamReader reader = new StreamReader(_assembly.GetManifestResourceStream(_assembly.GetManifestResourceNames().Single(str => str.EndsWith(licenseInformation[packageName].InternalTextFile)))))
                 {
                     fileContents = reader.ReadToEnd();
-                    Console.WriteLine(fileContents);
                 }
             }
             catch (Exception e)
@@ -61,7 +59,6 @@ namespace CashRegister.License
                 if (e.GetType() == typeof(InvalidOperationException))
                     logger.Error($"InvalidOperationException: is the Build Action of file {licenseInformation[packageName].InternalTextFile} set to Embedded Resource?");
             }
-            Console.WriteLine($"{fileContents}");
             return fileContents;
         }
 
