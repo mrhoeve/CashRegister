@@ -17,14 +17,14 @@ namespace UnitTests.Model
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutLoggingIn_ExpectFalse()
         {
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             Assert.IsFalse(curUser.isLoggedIn());
         }
 
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutPersoonOrPassword_ExpectFalse()
         {
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             curUser.LogIn(null,null);
             Assert.IsFalse(curUser.isLoggedIn());
         }
@@ -32,7 +32,7 @@ namespace UnitTests.Model
         [Test]
         public void test_isLoggedIn_NewInstanceWithRightCredentials_ExpectTrue()
         {
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
             Assert.IsTrue(curUser.isLoggedIn());
         }
@@ -41,7 +41,7 @@ namespace UnitTests.Model
         public void test_isLoggedIn_NewInstanceWithRightCredentials_WaitForTimeOut_FinallyExpectFalse()
         {
             // Setup test
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             object o = curUser;
             var t = typeof(CurUser);
             // Change the private (!!) property from the initial 5 minutes to 2 seconds
@@ -60,7 +60,7 @@ namespace UnitTests.Model
         public void test_isLoggedIn_NewInstanceWithRightCredentials_DelayForTimeOut_FinallyExpectFalse()
         {
             // Setup test
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             object o = curUser;
             var t = typeof(CurUser);
             // Call the private (!!) method to change the timerinterval from the initial 5 minutes to 3 seconds
@@ -84,7 +84,7 @@ namespace UnitTests.Model
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutRightCredentials_ExpectFalse()
         {
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALIDFORMAT_INVALIDPASSWORD);
             Assert.IsFalse(curUser.isLoggedIn());
         }
@@ -92,7 +92,7 @@ namespace UnitTests.Model
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutExistingUserUsingCorrectPassword_ExpectFalse()
         {
-            CurUser curUser = CurUser.curUser;
+            CurUser curUser = CurUser.get();
             curUser.LogIn(new Persoon(), Definitions.TEST_PASSWORD_VALID);
             Assert.IsFalse(curUser.isLoggedIn());
         }

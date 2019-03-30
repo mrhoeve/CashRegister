@@ -29,13 +29,11 @@ namespace CashRegister.DataModels
                         return $"{Voornaam} {Achternaam}";
                     else
                         return $"{Voornaam} {Tussenvoegsel} {Achternaam}";
-                    break;
                 default:
                     if (string.IsNullOrEmpty(Tussenvoegsel))
                         return $"{Achternaam}, {Voornaam}";
                     else
                         return $"{Achternaam}, {Voornaam} {Tussenvoegsel}";
-                    break;
                 
             }
         }

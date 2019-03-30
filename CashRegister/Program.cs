@@ -4,6 +4,8 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CashRegister.DAL;
+using CashRegister.Model;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -26,6 +28,9 @@ namespace CashRegister
             // Setup general exception handling
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+
+            Context.getInstance().Set(new DatabaseContext());
+            CurUser.get().isLoggedIn();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

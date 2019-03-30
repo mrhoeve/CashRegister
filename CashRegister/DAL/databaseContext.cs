@@ -12,6 +12,10 @@ namespace CashRegister.DAL
         public IDbSet<Product> Product { get; set; }
         public IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
+        public DatabaseContext() : base("CashRegister100")
+        {
+
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -52,6 +56,11 @@ namespace CashRegister.DAL
                 productPrijs.AangemaaktOp = DateTime.Now;
             }
             return base.SaveChanges();
+        }
+
+        public override string ToString()
+        {
+            return "DatabaseContext";
         }
     }
 }

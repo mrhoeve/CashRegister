@@ -2,6 +2,7 @@
 using CashRegister.DataModels;
 using System;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Timers;
 using CashRegister.Enum;
 
@@ -9,10 +10,10 @@ namespace CashRegister.Model
 {
     public sealed class CurUser
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         // Make sure we only get one instance of this class
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
-        public static readonly CurUser curUser = new CurUser();
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly CurUser _curUser = new CurUser();
 
         private Persoon _persoon { get; set; }
         private SysteemGebruiker _systeemGebruiker { get; set; }
@@ -23,6 +24,7 @@ namespace CashRegister.Model
         // Constructor, hidden because we only want one instance
         private CurUser()
         {
+            logger.Trace("CurUser started");
             // Make sure we begin with nothing
             _persoon = new Persoon();
             _systeemGebruiker = new SysteemGebruiker();
@@ -31,6 +33,13 @@ namespace CashRegister.Model
             _timerInterval = TimeSpan.FromMinutes(5);
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = false;
+            getContext();
+            logger.Debug($"Context: {_context}");
+        }
+
+        public static CurUser get()
+        {
+            return _curUser;
         }
 
         #region "Public functions"
@@ -96,7 +105,7 @@ namespace CashRegister.Model
 
         // When the timer goes, we automatically log the current user out
         private static void OnTimedEvent(object source, ElapsedEventArgs e) =>
-            curUser.LogOut();
+            _curUser.LogOut();
 
         #endregion
 
