@@ -7,6 +7,8 @@ namespace CashRegister.DAL
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public IDbSet<Persoon> Persoon { get; set; }
         public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
         public IDbSet<Product> Product { get; set; }
@@ -14,8 +16,11 @@ namespace CashRegister.DAL
 
         public DatabaseContext() : base("CashRegister100")
         {
-
+            Database.Log = s => logger.Trace(s);
+            //Database.Connection.ConnectionString = @"Data Source=(LocalDb)\v11.0;Initial Catalog=CashRegister100;Integrated Security=SSPI;AttachDBFilename=D:\CashRegister100.mdf;MultipleActiveResultSets=True";
+            Database.SetInitializer(new DatabaseContextInitialiser());
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,7 +36,6 @@ namespace CashRegister.DAL
             modelBuilder.Entity<ProductPrijs>()
                 .ToTable("ProductPrijs")
                 .HasRequired(p => p.Product);
-
         }
 
         public override int SaveChanges()
@@ -43,7 +47,7 @@ namespace CashRegister.DAL
             foreach (var entry in entriesAdded)
             {
                 var persoon = entry.Entity as Persoon;
-                persoon.AangemaaktOp = DateTime.UtcNow;
+                persoon.AangemaaktOp = DateTime.Now.Date;
             }
 
             var productPrijzen = ChangeTracker.Entries()
@@ -53,7 +57,7 @@ namespace CashRegister.DAL
             foreach (var entry in productPrijzen)
             {
                 var productPrijs = entry.Entity as ProductPrijs;
-                productPrijs.AangemaaktOp = DateTime.Now;
+                productPrijs.AangemaaktOp = DateTime.Now.Date;
             }
             return base.SaveChanges();
         }

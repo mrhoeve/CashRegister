@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CashRegister.DAL;
+﻿using CashRegister.DAL;
+using CashRegister.DataModels;
 using CashRegister.Model;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Permissions;
+using System.Text;
+using System.Windows.Forms;
 
 namespace CashRegister
 {
@@ -32,6 +33,8 @@ namespace CashRegister
             Context.getInstance().Set(new DatabaseContext());
             CurUser.get().isLoggedIn();
 
+            ShowSystemUsers();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -45,6 +48,20 @@ namespace CashRegister
                 logger.Fatal(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
             else
                 logger.Error(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
+        }
+
+        private static void ShowSystemUsers()
+        {
+            StringBuilder currentUsers = new StringBuilder();
+            currentUsers.Append("Current system users:");
+            List<SysteemGebruiker> systemUsers = new List<SysteemGebruiker>();
+            systemUsers = Context.getInstance().Get().SysteemGebruiker.ToList();
+            foreach (SysteemGebruiker user in systemUsers)
+            {
+                currentUsers.Append(" - ");
+                currentUsers.Append(user.Persoon.GetVolledigeNaam());
+            }
+            logger.Trace(currentUsers.ToString());
         }
 
         private static void ConfigureLogger()

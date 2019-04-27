@@ -1,7 +1,15 @@
-﻿namespace CashRegister.DAL
+﻿using CashRegister.DataModels;
+using System.Data.Entity;
+
+namespace CashRegister.DAL
 {
-    public class Context
+    public class Context : IDatabaseContext
     {
+        public IDbSet<Persoon> Persoon { get; set; }
+        public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
+        public IDbSet<Product> Product { get; set; }
+        public IDbSet<ProductPrijs> ProductPrijs { get; set; }
+
         private static Context instance = new Context();
         private IDatabaseContext _context;
 
@@ -22,5 +30,6 @@
             if (_context == null)
                 _context = context;
         }
+
     }
 }

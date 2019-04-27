@@ -13,12 +13,15 @@ namespace CashRegister.DataModels
         public virtual Product Product { get; set; }
         [DataType(DataType.Currency)]
         public decimal Prijs { get; set; }
+        [Column(TypeName = "datetime2")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]      // https://stackoverflow.com/questions/5252979/assign-format-of-datetime-with-data-annotations
         public DateTime AangemaaktOp { get; set; }
+        [Column(TypeName = "datetime2")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]      // https://stackoverflow.com/questions/5252979/assign-format-of-datetime-with-data-annotations
         public DateTime GeldigVan { get; set; }
+        [Column(TypeName = "datetime2")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]      // https://stackoverflow.com/questions/5252979/assign-format-of-datetime-with-data-annotations
         public DateTime? GeldigTot { get; set; }

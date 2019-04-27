@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="DAL\Context.cs" />
     <Compile Include="DAL\DatabaseContext.cs" />
+    <Compile Include="DAL\DatabaseContextInitialiser.cs" />
     <Compile Include="DAL\IDatabaseContext.cs" />
     <Compile Include="DataModels\Product.cs" />
     <Compile Include="DataModels\ProductPrijs.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\PersoonNaamHelper.cs" />
     <Compile Include="License\LicenseOSSHelper.cs" />
     <Compile Include="License\OpenSourceInformation.cs" />
     <Compile Include="License\ucLicenseForm.cs">
