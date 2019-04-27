@@ -9,10 +9,6 @@ namespace CashRegister
         public Form1()
         {
             InitializeComponent();
-            this.table.Controls.Add(new ucLicenseForm() { Dock=DockStyle.Fill });
-            formUsesOSS form = new formUsesOSS();
-            form.ShowDialog();
-            //Assert.AreEqual("https://opensource.org/", CashRegister.License.License.Registration.GetURLForPackage(lijst[1]));
 
         }
     }

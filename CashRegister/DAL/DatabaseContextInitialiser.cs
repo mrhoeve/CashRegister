@@ -3,10 +3,10 @@
 // To work with an existing database (if present), just comment the definition out
 #define ALWAYSDROP
 
+using CashRegister.DataModels;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using CashRegister.DataModels;
 
 namespace CashRegister.DAL
 {
@@ -18,6 +18,9 @@ namespace CashRegister.DAL
     {
         protected override void Seed(DatabaseContext context)
         {
+            base.Seed(context);
+
+            // Aanmaken default administrator
             Persoon administrator = new Persoon()
             {
                 Id = 1,
@@ -35,7 +38,16 @@ namespace CashRegister.DAL
                     Wachtwoord = DataModels.SysteemGebruiker.validateAndHashPassword("@dmin7944AM24")
                 });
 
-            base.Seed(context);
+            // Aanmaken standaard producten met huidige prijzen
+            Product bier = new Product() { Id = 1, Productomschrijving = "Bier" };
+            Product fris = new Product() { Id = 2, Productomschrijving = "Frisdrank" };
+
+            context.Product.AddOrUpdate(bier, fris);
+
+            ProductPrijs bierprijs = new ProductPrijs() { Id = 1, Product = bier, AangemaaktOp = DateTime.Now.Date, GeldigVan = DateTime.Now.Date, Prijs = 1.25m };
+            ProductPrijs frisprijs = new ProductPrijs() { Id = 2, Product = fris, AangemaaktOp = DateTime.Now.Date, GeldigVan = DateTime.Now.Date, Prijs = 0.50m };
+
+            context.ProductPrijs.AddOrUpdate(bierprijs, frisprijs);
         }
     }
 }

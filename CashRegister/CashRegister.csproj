@@ -147,6 +147,12 @@
     <Compile Include="Forms\formUsesOSS.Designer.cs">
       <DependentUpon>formUsesOSS.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Usercontrols\ucNumericKeypad.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Usercontrols\ucNumericKeypad.Designer.cs">
+      <DependentUpon>ucNumericKeypad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\FolderHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
@@ -167,12 +173,16 @@
     <Compile Include="Model\CurUser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Resources\opensource.png" />
+    <EmbeddedResource Include="Resources\DIGITALDREAMFATSKEW.ttf" />
+    <EmbeddedResource Include="Resources\opensource.png" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formUsesOSS.resx">
       <DependentUpon>formUsesOSS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Usercontrols\ucNumericKeypad.resx">
+      <DependentUpon>ucNumericKeypad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="License\ucLicenseForm.resx">
       <DependentUpon>ucLicenseForm.cs</DependentUpon>
