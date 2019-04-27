@@ -98,6 +98,7 @@ namespace CashRegister.Forms.Usercontrols
                     ProcessNumber(button.Text);
                     break;
             }
+            Guard();
             EnableDisableButtons();
             lblDisplay.Text = currentInput;
         }
@@ -206,6 +207,12 @@ namespace CashRegister.Forms.Usercontrols
                     currentInput = d.ToString("0.00").Replace(',', '.');
                     break;
             }
+        }
+
+        private void Guard()
+        {
+            if (decimalEntered && currentInput.Length > 13 || !decimalEntered && currentInput.Length > 10)
+                currentInput = currentInput.Substring(0, (decimalEntered ? 13 : 10));
         }
     #endregion
 
