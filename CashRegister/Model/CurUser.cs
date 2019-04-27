@@ -1,16 +1,16 @@
 ﻿using CashRegister.DAL;
 using CashRegister.DataModels;
+using CashRegister.Enum;
+using NLog;
 using System;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Timers;
-using CashRegister.Enum;
 
 namespace CashRegister.Model
 {
     public sealed class CurUser
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         // Make sure we only get one instance of this class
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
         private static readonly CurUser _curUser = new CurUser();

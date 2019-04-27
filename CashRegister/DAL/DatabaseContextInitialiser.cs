@@ -1,11 +1,16 @@
-﻿using System;
+﻿// #define ALWAYSDROP results in dropping the database on the start of the programm
+// This gives us the change to work with a new, clean database
+// To work with an existing database (if present), just comment the definition out
+#define ALWAYSDROP
+
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using CashRegister.DataModels;
 
 namespace CashRegister.DAL
 {
-#if DEBUG
+#if (DEBUG && ALWAYSDROP)
     public class DatabaseContextInitialiser : DropCreateDatabaseAlways<DatabaseContext>
 #else
     public class DatabaseContextInitialiser : CreateDatabaseIfNotExists<DatabaseContext>

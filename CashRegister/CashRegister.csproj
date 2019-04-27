@@ -148,6 +148,7 @@
       <DependentUpon>formUsesOSS.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\FolderHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\PersoonNaamHelper.cs" />

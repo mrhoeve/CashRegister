@@ -15,7 +15,7 @@ namespace CashRegister
 {
     static class Program
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The main entry point for the application.
@@ -88,7 +88,7 @@ namespace CashRegister
             config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTarget);
 #endif
 
-            NLog.LogManager.Configuration = config;
+            LogManager.Configuration = config;
 
             /*
              * Log levels

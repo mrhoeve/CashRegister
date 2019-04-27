@@ -1,4 +1,6 @@
 ﻿using CashRegister.DataModels;
+using CashRegister.Helpers;
+using NLog;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -7,17 +9,20 @@ namespace CashRegister.DAL
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public IDbSet<Persoon> Persoon { get; set; }
         public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
         public IDbSet<Product> Product { get; set; }
         public IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
-        public DatabaseContext() : base("CashRegister100")
+        public DatabaseContext()
         {
+            String dbFolder = FolderHelper.GetDBFolder();
+            logger.Debug($"Location of database: { dbFolder }");
             Database.Log = s => logger.Trace(s);
-            //Database.Connection.ConnectionString = @"Data Source=(LocalDb)\v11.0;Initial Catalog=CashRegister100;Integrated Security=SSPI;AttachDBFilename=D:\CashRegister100.mdf;MultipleActiveResultSets=True";
+            Database.Connection.ConnectionString = $"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=CashRegister100;Integrated Security=SSPI;AttachDBFilename=" + dbFolder + @"\CashRegister100.mdf;MultipleActiveResultSets=True";
+            logger.Trace($"Database connection string: {Database.Connection.ConnectionString}");
             Database.SetInitializer(new DatabaseContextInitialiser());
         }
 

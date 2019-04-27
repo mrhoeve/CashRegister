@@ -1,4 +1,5 @@
 ﻿using CashRegister.Helpers;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ namespace CashRegister.License
 {
     public sealed class License
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private SortedList<string, OpenSourceInformation> licenseInformation = new SortedList<string, OpenSourceInformation>();
 
         // Make sure we only get one instance of this class
