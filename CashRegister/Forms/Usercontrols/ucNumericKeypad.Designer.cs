@@ -40,14 +40,14 @@
             this.button0 = new System.Windows.Forms.Button();
             this.button00 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonEnter = new System.Windows.Forms.Button();
+            this.lblDisplay = new System.Windows.Forms.Label();
+            this.buttonDot = new System.Windows.Forms.Button();
             this.buttonEuro = new System.Windows.Forms.Button();
             this.buttonPlus = new System.Windows.Forms.Button();
             this.buttonMin = new System.Windows.Forms.Button();
-            this.buttonEnter = new System.Windows.Forms.Button();
-            this.lblDisplay = new System.Windows.Forms.Label();
             this.buttonC = new System.Windows.Forms.Button();
-            this.buttonDot = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.buttonCE = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -247,7 +247,7 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonPlus, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonMin, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.buttonC, 4, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button11, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCE, 4, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
@@ -260,6 +260,51 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 270);
             this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // buttonEnter
+            // 
+            this.buttonEnter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEnter.AutoSize = true;
+            this.buttonEnter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonEnter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonEnter.Location = new System.Drawing.Point(153, 173);
+            this.buttonEnter.Name = "buttonEnter";
+            this.tableLayoutPanel1.SetRowSpan(this.buttonEnter, 2);
+            this.buttonEnter.Size = new System.Drawing.Size(44, 94);
+            this.buttonEnter.TabIndex = 14;
+            this.buttonEnter.Text = "Enter";
+            this.buttonEnter.UseVisualStyleBackColor = true;
+            // 
+            // lblDisplay
+            // 
+            this.lblDisplay.AutoSize = true;
+            this.lblDisplay.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel1.SetColumnSpan(this.lblDisplay, 5);
+            this.lblDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDisplay.ForeColor = System.Drawing.Color.LimeGreen;
+            this.lblDisplay.Location = new System.Drawing.Point(3, 0);
+            this.lblDisplay.Name = "lblDisplay";
+            this.lblDisplay.Size = new System.Drawing.Size(244, 50);
+            this.lblDisplay.TabIndex = 15;
+            this.lblDisplay.Text = "label1";
+            this.lblDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // buttonDot
+            // 
+            this.buttonDot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDot.AutoSize = true;
+            this.buttonDot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonDot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonDot.Location = new System.Drawing.Point(103, 223);
+            this.buttonDot.Name = "buttonDot";
+            this.buttonDot.Size = new System.Drawing.Size(44, 44);
+            this.buttonDot.TabIndex = 17;
+            this.buttonDot.Text = ".";
+            this.buttonDot.UseVisualStyleBackColor = true;
             // 
             // buttonEuro
             // 
@@ -306,36 +351,6 @@
             this.buttonMin.Text = "-";
             this.buttonMin.UseVisualStyleBackColor = true;
             // 
-            // buttonEnter
-            // 
-            this.buttonEnter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEnter.AutoSize = true;
-            this.buttonEnter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonEnter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonEnter.Location = new System.Drawing.Point(153, 173);
-            this.buttonEnter.Name = "buttonEnter";
-            this.tableLayoutPanel1.SetRowSpan(this.buttonEnter, 2);
-            this.buttonEnter.Size = new System.Drawing.Size(44, 94);
-            this.buttonEnter.TabIndex = 14;
-            this.buttonEnter.Text = "Enter";
-            this.buttonEnter.UseVisualStyleBackColor = true;
-            // 
-            // lblDisplay
-            // 
-            this.lblDisplay.AutoSize = true;
-            this.lblDisplay.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel1.SetColumnSpan(this.lblDisplay, 5);
-            this.lblDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDisplay.ForeColor = System.Drawing.Color.LimeGreen;
-            this.lblDisplay.Location = new System.Drawing.Point(3, 0);
-            this.lblDisplay.Name = "lblDisplay";
-            this.lblDisplay.Size = new System.Drawing.Size(244, 50);
-            this.lblDisplay.TabIndex = 15;
-            this.lblDisplay.Text = "label1";
-            this.lblDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // buttonC
             // 
             this.buttonC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -351,35 +366,20 @@
             this.buttonC.Text = "C";
             this.buttonC.UseVisualStyleBackColor = true;
             // 
-            // buttonDot
+            // buttonCE
             // 
-            this.buttonDot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.buttonCE.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDot.AutoSize = true;
-            this.buttonDot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonDot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDot.Location = new System.Drawing.Point(103, 223);
-            this.buttonDot.Name = "buttonDot";
-            this.buttonDot.Size = new System.Drawing.Size(44, 44);
-            this.buttonDot.TabIndex = 17;
-            this.buttonDot.Text = ".";
-            this.buttonDot.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.AutoSize = true;
-            this.button11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.Location = new System.Drawing.Point(203, 123);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(44, 44);
-            this.button11.TabIndex = 19;
-            this.button11.Text = "CE";
-            this.button11.UseVisualStyleBackColor = true;
+            this.buttonCE.AutoSize = true;
+            this.buttonCE.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonCE.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCE.Location = new System.Drawing.Point(203, 123);
+            this.buttonCE.Name = "buttonCE";
+            this.buttonCE.Size = new System.Drawing.Size(44, 44);
+            this.buttonCE.TabIndex = 19;
+            this.buttonCE.Text = "CE";
+            this.buttonCE.UseVisualStyleBackColor = true;
             // 
             // ucNumericKeypad
             // 
@@ -418,6 +418,6 @@
         private System.Windows.Forms.Label lblDisplay;
         private System.Windows.Forms.Button buttonDot;
         private System.Windows.Forms.Button buttonC;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button buttonCE;
     }
 }

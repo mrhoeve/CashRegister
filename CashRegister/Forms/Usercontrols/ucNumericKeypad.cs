@@ -63,10 +63,24 @@ namespace CashRegister.Forms.Usercontrols
             lblDisplay.Font = DigitalFont;
             lblDisplay.Text = currentInput;
 
+            setToolTips();
+
             foreach (Button button in tableLayoutPanel1.Controls.OfType<Button>().ToList())
             {
                 button.Click += button_Click;
             }
+        }
+
+        private void setToolTips()
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.ShowAlways = true;
+            toolTip.SetToolTip(buttonEuro, "Creëert een correct geldbedrag van het ingevoerde getal (inclusief afronding)");
+            toolTip.SetToolTip(buttonEnter, "Creëert een correct geldbedrag van het ingevoerde getal (inclusief afronding)");
+            toolTip.SetToolTip(buttonC, "Verwijdert het meest rechtse item in het display");
+            toolTip.SetToolTip(buttonCE, "Reset de invoer");
+            toolTip.SetToolTip(buttonPlus, "Telt het getal 1 op bij de invoer (alleen als er geen decimaal is gebruikt)");
+            toolTip.SetToolTip(buttonMin, "Trekt het getal 1 af van de invoer (alleen als er geen decimaal is gebruikt)");
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -214,8 +228,8 @@ namespace CashRegister.Forms.Usercontrols
             if (decimalEntered && currentInput.Length > 13 || !decimalEntered && currentInput.Length > 10)
                 currentInput = currentInput.Substring(0, (decimalEntered ? 13 : 10));
         }
-    #endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }
