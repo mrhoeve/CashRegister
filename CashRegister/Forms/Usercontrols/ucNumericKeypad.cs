@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace CashRegister.Forms.Usercontrols
@@ -37,12 +38,12 @@ namespace CashRegister.Forms.Usercontrols
 
         public Boolean isInteger()
         {
-            return decimalEntered && currentInput.Substring(currentInput.Length - 1) != ".";
+            return !decimalEntered && Regex.IsMatch(currentInput, @"^\d+$");
         }
 
         public int getInteger()
         {
-            if (!isInteger()) throw new FormatException("Input isn't a number");
+            if (!isInteger()) throw new FormatException($"Input isn't a number");
             return Convert.ToInt32(currentInput);
         }
 
@@ -225,8 +226,8 @@ namespace CashRegister.Forms.Usercontrols
 
         private void Guard()
         {
-            if (decimalEntered && currentInput.Length > 13 || !decimalEntered && currentInput.Length > 10)
-                currentInput = currentInput.Substring(0, (decimalEntered ? 13 : 10));
+            if (decimalEntered && currentInput.Length > 13 || !decimalEntered && currentInput.Length > 8)
+                currentInput = currentInput.Substring(0, (decimalEntered ? 11 : 8));
         }
         #endregion
 
