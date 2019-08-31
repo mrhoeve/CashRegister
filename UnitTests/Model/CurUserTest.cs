@@ -61,22 +61,23 @@ namespace UnitTests.Model
         {
             // Setup test
             CurUser curUser = CurUser.get();
+            int timeout = 2;
             object o = curUser;
             var t = typeof(CurUser);
             // Call the private (!!) method to change the timerinterval from the initial 5 minutes to 3 seconds
             t.GetMethod("SetTimerInterval", BindingFlags.Instance | BindingFlags.NonPublic)
-                .Invoke(o, new object[] { TimeSpan.FromSeconds(3) });
+                .Invoke(o, new object[] { TimeSpan.FromSeconds(timeout) });
             // Log in with the right credentials
             curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
             for (int i = 0; i < 10; i++)
             {
                 // Now wait for the adjusted timer to nearly expire
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(TimeSpan.FromSeconds(timeout-1));
                 // Are we logged in? -- This should reset the timer
                 Assert.IsTrue(curUser.isLoggedIn());
             }
             // Now wait for the adjusted timer to expire
-            Thread.Sleep(TimeSpan.FromSeconds(4));
+            Thread.Sleep(TimeSpan.FromSeconds(timeout+1));
             // And check again if we're logged in
             Assert.IsFalse(curUser.isLoggedIn());
         }
