@@ -12,7 +12,7 @@ namespace UnitTests.Model
     /// Summary description for CurUserTest
     /// </summary>
     [TestFixture]
-    public class CurUserTest : MockEntityFramework
+    public class CurUserTest : TestDatabaseContext
     {
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutLoggingIn_ExpectFalse()
