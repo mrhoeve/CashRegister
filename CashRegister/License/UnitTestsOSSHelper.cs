@@ -15,8 +15,12 @@ namespace CashRegister.License
         {
             return new List<OpenSourceInformation>()
             {
-                new OpenSourceInformation("NUnit", "https://github.com/nunit/nunit", "NUnit.txt"),
-                new OpenSourceInformation("NSubstitute", "https://github.com/nsubstitute/NSubstitute", "NSubstitute.txt")
+                new OpenSourceInformation("(Test) NUnit", "https://github.com/nunit/nunit", "NUnit.txt"),
+                new OpenSourceInformation("(Test) NSubstitute", "https://github.com/nsubstitute/NSubstitute", "NSubstitute.txt"),
+                new OpenSourceInformation("(Test) Castle.Core", "http://www.castleproject.org", "CastleCore.txt"),
+                new OpenSourceInformation("(Test) Moq", "https://github.com/moq/moq4", "Moq.txt"),
+                new OpenSourceInformation("(Test) EntityFramework-Effort", "https://entityframework-effort.net/", "Effort.txt"),
+                new OpenSourceInformation("(Test) NMemory", "https://nmemory.net", "NMemory.txt")
             };
         }
 

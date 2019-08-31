@@ -8,7 +8,7 @@ using UnitTests.DAL;
 namespace UnitTests.DataModels
 {
     [TestFixture]
-    public class ProductTest : MockEntityFramework
+    public class ProductTest : TestDatabaseContext
     {
         [Test]
         public void TestProduct1Combinations()

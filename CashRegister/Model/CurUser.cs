@@ -19,7 +19,7 @@ namespace CashRegister.Model
         private SysteemGebruiker _systeemGebruiker { get; set; }
         private TimeSpan _timerInterval { get; set; }
         private Timer _timer;
-        private IDatabaseContext _context;
+        private DatabaseContext _context;
 
         // Constructor, hidden because we only want one instance
         private CurUser()

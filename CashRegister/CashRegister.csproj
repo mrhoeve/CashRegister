@@ -129,7 +129,6 @@
     <Compile Include="DAL\Context.cs" />
     <Compile Include="DAL\DatabaseContext.cs" />
     <Compile Include="DAL\DatabaseContextInitialiser.cs" />
-    <Compile Include="DAL\IDatabaseContext.cs" />
     <Compile Include="DataModels\Product.cs" />
     <Compile Include="DataModels\ProductPrijs.cs" />
     <Compile Include="DataModels\SysteemGebruiker.cs" />
@@ -234,6 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="License\License\CastleCore.txt" />
+    <EmbeddedResource Include="License\License\Effort.txt" />
+    <EmbeddedResource Include="License\License\Moq.txt" />
+    <EmbeddedResource Include="License\License\NMemory.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

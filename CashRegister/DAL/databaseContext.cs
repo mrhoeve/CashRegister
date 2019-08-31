@@ -2,12 +2,13 @@
 using CashRegister.Helpers;
 using NLog;
 using System;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 
 namespace CashRegister.DAL
 {
-    public class DatabaseContext : DbContext, IDatabaseContext
+    public class DatabaseContext : DbContext
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -16,14 +17,15 @@ namespace CashRegister.DAL
         public IDbSet<Product> Product { get; set; }
         public IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
-        public DatabaseContext()
+        public DatabaseContext(DbConnection connection, bool logging = false) : base(connection, true)
         {
-            String dbFolder = FolderHelper.GetDBFolder();
-            logger.Debug($"Location of database: { dbFolder }");
-            Database.Log = s => logger.Trace(s);
-            Database.Connection.ConnectionString = $"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=CashRegister100;Integrated Security=SSPI;AttachDBFilename=" + dbFolder + @"\CashRegister100.mdf;MultipleActiveResultSets=True";
-            logger.Trace($"Database connection string: {Database.Connection.ConnectionString}");
-            Database.SetInitializer(new DatabaseContextInitialiser());
+            if (logging)
+            {
+                String dbFolder = FolderHelper.GetDBFolder();
+                logger.Debug($"Location of database: { dbFolder }");
+                Database.Log = s => logger.Trace(s);
+                logger.Trace($"Database connection string: {Database.Connection.ConnectionString}");
+            }
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -65,11 +67,6 @@ namespace CashRegister.DAL
                 productPrijs.AangemaaktOp = DateTime.Now.Date;
             }
             return base.SaveChanges();
-        }
-
-        public override string ToString()
-        {
-            return "DatabaseContext";
         }
     }
 }

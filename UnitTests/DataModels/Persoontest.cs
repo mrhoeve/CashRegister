@@ -1,12 +1,11 @@
 ﻿using CashRegister.DataModels;
 using CashRegister.Enum;
 using NUnit.Framework;
-using UnitTests.DAL;
 
 namespace UnitTests.DataModels
 {
     [TestFixture]
-    public class PersoonTest : MockEntityFramework
+    public class PersoonTest
     {
         [Test]
         public void test_NieuwPersoon_HeeftRekening_ExpectTrue()

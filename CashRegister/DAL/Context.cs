@@ -1,17 +1,16 @@
-﻿using CashRegister.DataModels;
+﻿using CashRegister.Helpers;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace CashRegister.DAL
 {
-    public class Context : IDatabaseContext
+    public class Context
     {
-        public IDbSet<Persoon> Persoon { get; set; }
-        public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
-        public IDbSet<Product> Product { get; set; }
-        public IDbSet<ProductPrijs> ProductPrijs { get; set; }
 
         private static Context instance = new Context();
-        private IDatabaseContext _context;
+        private DatabaseContext _context;
+        private bool productionEnvironment;
 
         private Context() { }
 
@@ -20,16 +19,40 @@ namespace CashRegister.DAL
             return instance;
         }
 
-        public IDatabaseContext Get()
+        public DatabaseContext Get()
         {
             return _context;
         }
 
-        public void Set(IDatabaseContext context)
+        public void setProduction()
         {
+            DbConnection connection = new SqlConnection($"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=CashRegister100;Integrated Security=SSPI;AttachDBFilename=" + FolderHelper.GetDBFolder() + @"\CashRegister100.mdf;MultipleActiveResultSets=True");
             if (_context == null)
-                _context = context;
+            {
+                productionEnvironment = true;
+                _context = new DatabaseContext(connection, productionEnvironment);
+                Database.SetInitializer(new DatabaseContextInitialiser());
+            }
         }
 
+        public void setTest(DbConnection connection)
+        {
+            if (_context == null)
+            {
+                productionEnvironment = false;
+                _context = new DatabaseContext(connection, productionEnvironment);
+                // Initialising is set from test project
+            }
+        }
+
+        public bool isProduction()
+        {
+            return productionEnvironment;
+        }
+
+        public bool isTest()
+        {
+            return !productionEnvironment;
+        }
     }
 }

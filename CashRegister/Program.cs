@@ -30,7 +30,7 @@ namespace CashRegister
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
 
-            Context.getInstance().Set(new DatabaseContext());
+            Context.getInstance().setProduction();
             CurUser.get().isLoggedIn();
 
             ShowSystemUsers();
