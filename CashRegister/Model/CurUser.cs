@@ -138,10 +138,10 @@ namespace CashRegister.Model
 
     public class CurUserStatus
     {
-        public Boolean isLoggedIn { get; }
+        public bool isLoggedIn { get; }
         public Persoon currentUser { get; }
 
-        public CurUserStatus(Boolean isLoggedIn, Persoon currentUser)
+        public CurUserStatus(bool isLoggedIn, Persoon currentUser)
         {
             this.isLoggedIn = isLoggedIn;
             this.currentUser = currentUser;
