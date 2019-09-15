@@ -8,6 +8,8 @@ using System.Timers;
 
 namespace CashRegister.Model
 {
+    public delegate void CurUserStatusChange(CurUserStatus curUserStatus);
+
     public sealed class CurUser
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -15,6 +17,7 @@ namespace CashRegister.Model
         // See https://stackoverflow.com/questions/6320393/how-to-create-a-class-which-can-only-have-a-single-instance-in-c-sharp
         private static readonly CurUser _curUser = new CurUser();
 
+        private event CurUserStatusChange curUserStatusChange;
         private Persoon _persoon { get; set; }
         private SysteemGebruiker _systeemGebruiker { get; set; }
         private TimeSpan _timerInterval { get; set; }
@@ -26,8 +29,8 @@ namespace CashRegister.Model
         {
             logger.Trace("CurUser started");
             // Make sure we begin with nothing
-            _persoon = new Persoon();
-            _systeemGebruiker = new SysteemGebruiker();
+            _persoon = null;
+            _systeemGebruiker = null;
             // Setup the timer
             _timer = new Timer();
             _timerInterval = TimeSpan.FromMinutes(5);
@@ -66,16 +69,34 @@ namespace CashRegister.Model
         public void LogOut()
         {
             StopTimer();
-            logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged out.");
-            _persoon = new Persoon();
-            _systeemGebruiker = new SysteemGebruiker();
+            if (_persoon != null)
+            {
+                logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged out.");
+            }
+            _persoon = null;
+            _systeemGebruiker = null;
 
+        }
+
+        public void SubscribeToUserStatusChange(CurUserStatusChange subscriber)
+        {
+            curUserStatusChange += subscriber;
+        }
+
+        public void UnsubscribeFromUserStatusChange(CurUserStatusChange unsubscriber)
+        {
+            curUserStatusChange -= unsubscriber;
         }
 
         public bool isLoggedIn()
         {
             if(_timer.Enabled) _timer.Reset();
-            return (_persoon.Id != 0 && _systeemGebruiker.PersoonId != 0);
+            return ((_persoon != null && _persoon.Id != 0) && (_systeemGebruiker != null && _systeemGebruiker.PersoonId != 0));
+        }
+
+        public Persoon getCurrentUser()
+        {
+            return _persoon;
         }
         #endregion
 
@@ -92,6 +113,8 @@ namespace CashRegister.Model
             {
                 _timer.Interval = _timerInterval.TotalMilliseconds;
                 _timer.Enabled = true;
+                // Fire event to notify observers of change in status
+                curUserStatusChange?.Invoke(new CurUserStatus(true, _persoon));
             }
         }
 
@@ -100,6 +123,8 @@ namespace CashRegister.Model
             if (_timer.Enabled)
             {
                 _timer.Stop();
+                // Fire event to notify observers of change in status
+                curUserStatusChange?.Invoke(new CurUserStatus(false, null));
             }
         }
 
@@ -109,6 +134,18 @@ namespace CashRegister.Model
 
         #endregion
 
+    }
+
+    public class CurUserStatus
+    {
+        public Boolean isLoggedIn { get; }
+        public Persoon currentUser { get; }
+
+        public CurUserStatus(Boolean isLoggedIn, Persoon currentUser)
+        {
+            this.isLoggedIn = isLoggedIn;
+            this.currentUser = currentUser;
+        }
     }
 
     internal static class TimerHelper
