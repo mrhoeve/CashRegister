@@ -14,6 +14,15 @@ namespace UnitTests.Model
     [TestFixture]
     public class CurUserTest : TestDatabaseContext
     {
+        private int curUserChangedEventCounter;
+        private CurUserStatus curUserStatus;
+
+        private void notifierCurUserChanged(CurUserStatus curUserStatus)
+        {
+            curUserChangedEventCounter++;
+            this.curUserStatus = curUserStatus;
+        }
+
         [Test]
         public void test_isLoggedIn_NewInstanceWithoutLoggingIn_ExpectFalse()
         {
@@ -30,11 +39,34 @@ namespace UnitTests.Model
         }
 
         [Test]
+        public void test_subscribeAndUnsubscribe()
+        {
+            Assert.AreEqual(0, curUserChangedEventCounter);
+            CurUser curUser = CurUser.get();
+            curUser.SubscribeToUserStatusChange(notifierCurUserChanged);
+            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            Assert.AreEqual(1, curUserChangedEventCounter);
+            Assert.IsTrue(curUserStatus.isLoggedIn);
+            Assert.AreEqual(Definitions.localAdminP, curUserStatus.currentUser);
+            curUser.LogOut();
+            Assert.AreEqual(2, curUserChangedEventCounter);
+            Assert.IsFalse(curUserStatus.isLoggedIn);
+            Assert.AreEqual(null, curUserStatus.currentUser);
+            curUser.UnsubscribeFromUserStatusChange(notifierCurUserChanged);
+            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            Assert.IsTrue(curUser.isLoggedIn());
+            Assert.AreEqual(2, curUserChangedEventCounter);
+            Assert.IsFalse(curUserStatus.isLoggedIn);
+        }
+
+
+        [Test]
         public void test_isLoggedIn_NewInstanceWithRightCredentials_ExpectTrue()
         {
             CurUser curUser = CurUser.get();
             curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
             Assert.IsTrue(curUser.isLoggedIn());
+            Assert.AreEqual(Definitions.localAdminP, curUser.getCurrentUser());
         }
 
         [Test]
