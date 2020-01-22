@@ -30,6 +30,8 @@ namespace CashRegister
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
 
+            ShowCurrentGitVersion();
+
             Context.getInstance().setProduction();
             CurUser.get().isLoggedIn();
 
@@ -48,6 +50,24 @@ namespace CashRegister
                 logger.Fatal(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
             else
                 logger.Error(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
+        }
+
+        private static void ShowCurrentGitVersion()
+        {
+            String Major = GitVersionInformation.Major;
+            String Minor = GitVersionInformation.Minor;
+            String Patch = GitVersionInformation.Patch;
+            String Branch = GitVersionInformation.BranchName.ToLower();
+            String CommitSHA = GitVersionInformation.ShortSha;
+
+            if (Branch != "master")
+            {
+                logger.Trace(string.Format("Version {0:00}.{1:00}.{2:00}-{3}-{4}", Major, Minor, Patch, Branch, CommitSHA));
+            }
+            else
+            {
+                logger.Trace(string.Format("Version {0:00}.{1:00}.{2:00}-{3}",  Major, Minor, Patch, CommitSHA));
+            }
         }
 
         private static void ShowSystemUsers()
