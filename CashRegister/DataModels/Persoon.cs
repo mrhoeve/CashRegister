@@ -8,14 +8,14 @@ namespace CashRegister.DataModels
 {
     public class Persoon
     {
-        private Boolean rekening = true;
+        private bool rekening = true;
 
         [Key]
         public int Id { get; set; }
         public string Voornaam { get; set; }
         public string Tussenvoegsel { get; set; }
         public string Achternaam { get; set; }
-        public Boolean heeftRekening
+        public bool heeftRekening
         {
             get { return rekening; }
             set { this.rekening = value; }

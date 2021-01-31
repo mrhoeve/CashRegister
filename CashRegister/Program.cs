@@ -1,5 +1,6 @@
 ﻿using CashRegister.DAL;
 using CashRegister.DataModels;
+using CashRegister.Forms;
 using CashRegister.Model;
 using NLog;
 using NLog.Config;
@@ -37,7 +38,7 @@ namespace CashRegister
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new formMain());
             logger.Trace("Application ended");
         }
 
