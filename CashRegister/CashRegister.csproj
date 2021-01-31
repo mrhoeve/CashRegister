@@ -262,6 +262,11 @@
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
     </PackageReference>
+    <PackageReference Include="GitVersion.MsBuild">
+      <Version>5.6.4</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.7.7</Version>
     </PackageReference>

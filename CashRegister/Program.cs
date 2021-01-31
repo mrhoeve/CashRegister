@@ -34,6 +34,7 @@ namespace CashRegister
             Context.getInstance().setProduction();
             CurUser.get().isLoggedIn();
 
+            ShowVersionInformation();
             ShowSystemUsers();
 
             Application.EnableVisualStyles();
@@ -49,6 +50,20 @@ namespace CashRegister
                 logger.Fatal(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
             else
                 logger.Error(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
+        }
+
+        private static void ShowVersionInformation()
+        {
+            logger.Info($"Branche ${GitVersionInformation.BranchName}");
+
+            var assemblyName = typeof(Program).Assembly.GetName().Name;
+            var gitVersionInformationType = typeof(Program).Assembly.GetType("GitVersionInformation");
+            var fields = gitVersionInformationType.GetFields();
+
+            foreach (var field in fields)
+            {
+                logger.Info(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
+            }
         }
 
         private static void ShowSystemUsers()
