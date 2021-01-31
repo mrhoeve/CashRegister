@@ -1,6 +1,7 @@
 ﻿using CashRegister.DAL;
 using CashRegister.DataModels;
 using CashRegister.Forms;
+using CashRegister.Helpers;
 using CashRegister.Model;
 using NLog;
 using NLog.Config;
@@ -34,6 +35,7 @@ namespace CashRegister
             Context.getInstance().setProduction();
             CurUser.get().isLoggedIn();
 
+            ShowVersionInformation();
             ShowSystemUsers();
 
             Application.EnableVisualStyles();
@@ -51,6 +53,24 @@ namespace CashRegister
                 logger.Error(e, $"General uncaught exception: {e.Message} {e.StackTrace}");
         }
 
+        private static void ShowVersionInformation()
+        {
+            logger.Info($"CashRegister {GitVersionHelper.GetFullVersionInformation().ToLower()}");
+            if(!String.IsNullOrEmpty(GitVersionHelper.GetBrancheName()))
+            {
+                logger.Info($"{GitVersionHelper.GetBrancheName()}");
+            }
+
+            var assemblyName = typeof(Program).Assembly.GetName().Name;
+            var gitVersionInformationType = typeof(Program).Assembly.GetType("GitVersionInformation");
+            var fields = gitVersionInformationType.GetFields();
+
+            foreach (var field in fields)
+            {
+                logger.Debug(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
+            }
+        }
+
         private static void ShowSystemUsers()
         {
             StringBuilder currentUsers = new StringBuilder();
@@ -62,7 +82,7 @@ namespace CashRegister
                 currentUsers.Append(" - ");
                 currentUsers.Append(user.Persoon.GetVolledigeNaam());
             }
-            logger.Trace(currentUsers.ToString());
+            logger.Debug(currentUsers.ToString());
         }
 
         private static void ConfigureLogger()
@@ -84,7 +104,7 @@ namespace CashRegister
             };
             config.AddTarget(fileTarget);
 #if DEBUG
-            config.AddRule(LogLevel.Trace,LogLevel.Fatal, fileTarget);
+            config.AddRule(LogLevel.Debug,LogLevel.Fatal, fileTarget);
 #else
             config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTarget);
 #endif
