@@ -31,6 +31,7 @@
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.mainRightLayout = new System.Windows.Forms.TableLayoutPanel();
             this.ucNumericKeypad1 = new CashRegister.Forms.Usercontrols.ucNumericKeypad();
+            this.ucStatusbar1 = new CashRegister.Forms.Usercontrols.ucStatusbar();
             this.mainLayout.SuspendLayout();
             this.mainRightLayout.SuspendLayout();
             this.SuspendLayout();
@@ -42,13 +43,15 @@
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 262F));
             this.mainLayout.Controls.Add(this.mainRightLayout, 1, 0);
+            this.mainLayout.Controls.Add(this.ucStatusbar1, 0, 1);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Margin = new System.Windows.Forms.Padding(0);
             this.mainLayout.Name = "mainLayout";
-            this.mainLayout.RowCount = 1;
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.mainLayout.Size = new System.Drawing.Size(800, 450);
+            this.mainLayout.RowCount = 2;
+            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.mainLayout.Size = new System.Drawing.Size(800, 448);
             this.mainLayout.TabIndex = 0;
             // 
             // mainRightLayout
@@ -64,7 +67,7 @@
             this.mainRightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.mainRightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
             this.mainRightLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.mainRightLayout.Size = new System.Drawing.Size(262, 450);
+            this.mainRightLayout.Size = new System.Drawing.Size(262, 388);
             this.mainRightLayout.TabIndex = 0;
             // 
             // ucNumericKeypad1
@@ -75,11 +78,22 @@
             this.ucNumericKeypad1.Size = new System.Drawing.Size(256, 274);
             this.ucNumericKeypad1.TabIndex = 0;
             // 
+            // ucStatusbar1
+            // 
+            this.ucStatusbar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainLayout.SetColumnSpan(this.ucStatusbar1, 2);
+            this.ucStatusbar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucStatusbar1.Location = new System.Drawing.Point(0, 388);
+            this.ucStatusbar1.Margin = new System.Windows.Forms.Padding(0);
+            this.ucStatusbar1.Name = "ucStatusbar1";
+            this.ucStatusbar1.Size = new System.Drawing.Size(800, 60);
+            this.ucStatusbar1.TabIndex = 1;
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 448);
             this.Controls.Add(this.mainLayout);
             this.Name = "formMain";
             this.Text = "formMain";
@@ -95,5 +109,6 @@
         private System.Windows.Forms.TableLayoutPanel mainLayout;
         private System.Windows.Forms.TableLayoutPanel mainRightLayout;
         private Usercontrols.ucNumericKeypad ucNumericKeypad1;
+        private Usercontrols.ucStatusbar ucStatusbar1;
     }
 }

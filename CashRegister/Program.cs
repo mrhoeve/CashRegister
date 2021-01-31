@@ -1,6 +1,7 @@
 ﻿using CashRegister.DAL;
 using CashRegister.DataModels;
 using CashRegister.Forms;
+using CashRegister.Helpers;
 using CashRegister.Model;
 using NLog;
 using NLog.Config;
@@ -54,7 +55,11 @@ namespace CashRegister
 
         private static void ShowVersionInformation()
         {
-            logger.Info($"Branche ${GitVersionInformation.BranchName}");
+            logger.Info($"CashRegister {GitVersionHelper.GetFullVersionInformation().ToLower()}");
+            if(!String.IsNullOrEmpty(GitVersionHelper.GetBrancheName()))
+            {
+                logger.Info($"{GitVersionHelper.GetBrancheName()}");
+            }
 
             var assemblyName = typeof(Program).Assembly.GetName().Name;
             var gitVersionInformationType = typeof(Program).Assembly.GetType("GitVersionInformation");
@@ -62,7 +67,7 @@ namespace CashRegister
 
             foreach (var field in fields)
             {
-                logger.Info(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
+                logger.Debug(string.Format("{0}: {1}", field.Name, field.GetValue(null)));
             }
         }
 
@@ -77,7 +82,7 @@ namespace CashRegister
                 currentUsers.Append(" - ");
                 currentUsers.Append(user.Persoon.GetVolledigeNaam());
             }
-            logger.Trace(currentUsers.ToString());
+            logger.Debug(currentUsers.ToString());
         }
 
         private static void ConfigureLogger()
@@ -99,7 +104,7 @@ namespace CashRegister
             };
             config.AddTarget(fileTarget);
 #if DEBUG
-            config.AddRule(LogLevel.Trace,LogLevel.Fatal, fileTarget);
+            config.AddRule(LogLevel.Debug,LogLevel.Fatal, fileTarget);
 #else
             config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTarget);
 #endif

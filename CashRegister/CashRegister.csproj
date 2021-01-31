@@ -162,8 +162,15 @@
     <Compile Include="Forms\Usercontrols\ucProduct.Designer.cs">
       <DependentUpon>ucProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Usercontrols\ucStatusbar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Usercontrols\ucStatusbar.Designer.cs">
+      <DependentUpon>ucStatusbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\FolderHelper.cs" />
+    <Compile Include="Helpers\GitVersionHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\PersoonNaamHelper.cs" />
@@ -190,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Usercontrols\ucProduct.resx">
       <DependentUpon>ucProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Usercontrols\ucStatusbar.resx">
+      <DependentUpon>ucStatusbar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DIGITALDREAMFATSKEW.ttf" />
     <EmbeddedResource Include="Resources\opensource.png" />
