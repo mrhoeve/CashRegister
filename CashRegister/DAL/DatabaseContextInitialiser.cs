@@ -4,32 +4,73 @@
 #define ALWAYSDROP
 
 using CashRegister.DataModels;
+using CashRegister.Helpers;
+using NLog;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
 
 namespace CashRegister.DAL
 {
-#if (DEBUG && ALWAYSDROP)
+#if DEBUG && ALWAYSDROP
     public class DatabaseContextInitialiser : DropCreateDatabaseAlways<DatabaseContext>
 #else
     public class DatabaseContextInitialiser : CreateDatabaseIfNotExists<DatabaseContext>
 #endif
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         protected override void Seed(DatabaseContext context)
         {
             base.Seed(context);
 
+            // Aanmaken SYSTEM account
+            Persoon systemAccount = new Persoon()
+            {
+                Id = 1,
+                Achternaam = "SYSTEM",
+                heeftRekening = false,
+                AangemaaktOp = DateTime.Now,
+                GewijzigdOp = DateTime.Now
+            };
+            context.Persoon.AddOrUpdate(systemAccount);
+            context.SaveChanges();
+            systemAccount.AangemaaktDoor = systemAccount;
+            systemAccount.GewijzigdDoor = systemAccount;
+            context.Persoon.AddOrUpdate(systemAccount);
+            logger.Debug($"Systemaccount {systemAccount.GetVolledigeNaam()} created");
+
             // Aanmaken default administrator
             Persoon administrator = new Persoon()
             {
-                Id = 1,
                 Achternaam = "Administrator",
                 heeftRekening = false,
-                AangemaaktOp = DateTime.Now.Date
+                AangemaaktOp = DateTime.Now,
+                AangemaaktDoor = systemAccount,
+                GewijzigdOp = DateTime.Now,
+                GewijzigdDoor = systemAccount
             };
 
             context.Persoon.AddOrUpdate(administrator);
+            logger.Debug($"Administratoraccount {administrator.GetVolledigeNaam()} created");
+
+#if DEBUG
+            // Aanmaken klant, alleen in debug
+            Persoon klant = new Persoon()
+            {
+                Voornaam = "Klant",
+                Achternaam = "Klant",
+                heeftRekening = true,
+                AangemaaktOp = DateTime.Now,
+                AangemaaktDoor = systemAccount,
+                GewijzigdOp = DateTime.Now,
+                GewijzigdDoor = administrator
+            };
+
+            context.Persoon.AddOrUpdate(klant);
+            logger.Debug($"Account {klant.GetVolledigeNaam()} created");
+#endif
 
             context.SysteemGebruiker.AddOrUpdate(
                 new SysteemGebruiker()
@@ -48,6 +89,9 @@ namespace CashRegister.DAL
             ProductPrijs frisprijs = new ProductPrijs() { Id = 2, Product = fris, AangemaaktOp = DateTime.Now.Date, GeldigVan = DateTime.Now.Date, Prijs = 0.50m };
 
             context.ProductPrijs.AddOrUpdate(bierprijs, frisprijs);
+            context.SaveChanges();
+
+            context.ProductPrijs.ToList().ForEach(p => logger.Debug($"Product {p.Product.Productomschrijving} met prijs {p.Prijs.ToEuroString()} toegevoegd."));
         }
     }
 }

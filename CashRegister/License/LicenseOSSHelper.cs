@@ -13,7 +13,12 @@ namespace CashRegister.License
     {
         public List<OpenSourceInformation> getOpenSourceInformation()
         {
-            return new OpenSourceInformation("NLog", "https://github.com/NLog/NLog", "NLog.txt").singleList();
+            return new List<OpenSourceInformation>
+            {
+                new OpenSourceInformation("NLog", "https://github.com/NLog/NLog", "NLog.txt"),
+                new OpenSourceInformation("GitVersion.MsBuild", "https://github.com/GitTools/GitVersion", "GitVersion.MsBuild.txt"),
+                new OpenSourceInformation("NodaMoney", "https://www.nodamoney.org/", "NodaMoney.txt")
+            };
         }
 
     }

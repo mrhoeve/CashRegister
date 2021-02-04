@@ -16,5 +16,11 @@ namespace CashRegister.Forms
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            formUsesOSS form = new formUsesOSS();
+            form.ShowDialog();
+        }
     }
 }

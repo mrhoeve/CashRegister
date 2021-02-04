@@ -32,6 +32,7 @@
             this.mainRightLayout = new System.Windows.Forms.TableLayoutPanel();
             this.ucNumericKeypad1 = new CashRegister.Forms.Usercontrols.ucNumericKeypad();
             this.ucStatusbar1 = new CashRegister.Forms.Usercontrols.ucStatusbar();
+            this.button1 = new System.Windows.Forms.Button();
             this.mainLayout.SuspendLayout();
             this.mainRightLayout.SuspendLayout();
             this.SuspendLayout();
@@ -44,6 +45,7 @@
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 262F));
             this.mainLayout.Controls.Add(this.mainRightLayout, 1, 0);
             this.mainLayout.Controls.Add(this.ucStatusbar1, 0, 1);
+            this.mainLayout.Controls.Add(this.button1, 0, 0);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
             this.mainLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -89,6 +91,16 @@
             this.ucStatusbar1.Size = new System.Drawing.Size(800, 60);
             this.ucStatusbar1.TabIndex = 1;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.TableLayoutPanel mainRightLayout;
         private Usercontrols.ucNumericKeypad ucNumericKeypad1;
         private Usercontrols.ucStatusbar ucStatusbar1;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -8,7 +8,7 @@ namespace UnitTests
         // For testing administrators
         // Persoon localAdminP must be made without a SysteemGebruiker
         // Within the MockEntityFramework class, they'll be joined together
-        public static readonly Persoon localAdminP = new Persoon() { Id = 3, Voornaam = "Bas", Tussenvoegsel = "", Achternaam = "Uurman", AangemaaktOp = DateTime.UtcNow };
+        public static readonly Persoon localAdminP = new Persoon() { Id = 3, Voornaam = "Bas", Tussenvoegsel = "", Achternaam = "Uurman", AangemaaktOp = DateTime.UtcNow, GewijzigdOp = DateTime.UtcNow };
         public static readonly SysteemGebruiker localAdminS = new SysteemGebruiker() { PersoonId = localAdminP.Id, Persoon = localAdminP, Wachtwoord = SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID) };
 
         // Testing passwords

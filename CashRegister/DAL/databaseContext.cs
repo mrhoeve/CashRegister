@@ -1,5 +1,6 @@
 ﻿using CashRegister.DataModels;
 using CashRegister.Helpers;
+using CashRegister.Model;
 using NLog;
 using System;
 using System.Data.Common;
@@ -16,6 +17,7 @@ namespace CashRegister.DAL
         public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
         public IDbSet<Product> Product { get; set; }
         public IDbSet<ProductPrijs> ProductPrijs { get; set; }
+        public IDbSet<Transactie> Transactie { get; set; }
 
         public DatabaseContext(DbConnection connection, bool logging = false) : base(connection, true)
         {
@@ -43,10 +45,13 @@ namespace CashRegister.DAL
             modelBuilder.Entity<ProductPrijs>()
                 .ToTable("ProductPrijs")
                 .HasRequired(p => p.Product);
+            modelBuilder.Entity<Transactie>().ToTable("Transactie");
         }
 
         public override int SaveChanges()
         {
+            Persoon currentUser = CurUser.get().isLoggedIn() ? CurUser.get().getCurrentUser() : null;
+
             var entriesAdded = ChangeTracker.Entries()
                 .Where(e => e.Entity == Persoon)
                 .Where(e => e.State == EntityState.Added);
@@ -54,7 +59,21 @@ namespace CashRegister.DAL
             foreach (var entry in entriesAdded)
             {
                 var persoon = entry.Entity as Persoon;
-                persoon.AangemaaktOp = DateTime.Now.Date;
+                persoon.AangemaaktOp = DateTime.Now;
+                persoon.AangemaaktDoor = currentUser;
+                persoon.GewijzigdOp = DateTime.Now;
+                persoon.GewijzigdDoor = currentUser;
+            }
+
+            var entriesModified = ChangeTracker.Entries()
+                .Where(e => e.Entity == Persoon)
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in entriesModified)
+            {
+                var persoon = entry.Entity as Persoon;
+                persoon.GewijzigdOp = DateTime.Now;
+                persoon.GewijzigdDoor = currentUser;
             }
 
             var productPrijzen = ChangeTracker.Entries()

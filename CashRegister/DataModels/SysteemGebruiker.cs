@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// Class uses BCrypt via NuGet for password hashing
+// Class uses BCrypt.Net-Next via NuGet for password hashing
 // Source and documentation: https://github.com/BcryptNet/bcrypt.net
 
 namespace CashRegister.DataModels
@@ -34,7 +34,7 @@ namespace CashRegister.DataModels
 
         public List<OpenSourceInformation> getOpenSourceInformation()
         {
-            return new OpenSourceInformation("BCrypt", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.txt").singleList();
+            return new OpenSourceInformation("BCrypt.Net-Next", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.Net-Next.txt").singleList();
         }
     }
 }

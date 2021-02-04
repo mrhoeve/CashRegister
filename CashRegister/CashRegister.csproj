@@ -124,6 +124,7 @@
     <Compile Include="DataModels\Product.cs" />
     <Compile Include="DataModels\ProductPrijs.cs" />
     <Compile Include="DataModels\SysteemGebruiker.cs" />
+    <Compile Include="DataModels\Transactie.cs" />
     <Compile Include="Enum\NameOrder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -173,7 +174,7 @@
     <Compile Include="Helpers\GitVersionHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
-    <Compile Include="Helpers\PersoonNaamHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="License\LicenseOSSHelper.cs" />
     <Compile Include="License\OpenSourceInformation.cs" />
     <Compile Include="License\ucLicenseForm.cs">
@@ -254,7 +255,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="License\License\BCrypt.txt" />
+    <EmbeddedResource Include="License\License\BCrypt.Net-Next.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
@@ -286,6 +287,9 @@
     <PackageReference Include="NLog.Schema">
       <Version>4.7.7</Version>
     </PackageReference>
+    <PackageReference Include="NodaMoney">
+      <Version>1.0.5</Version>
+    </PackageReference>
     <PackageReference Include="System.Buffers">
       <Version>4.5.1</Version>
     </PackageReference>
@@ -301,6 +305,10 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>5.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="License\License\GitVersion.MsBuild.txt" />
+    <EmbeddedResource Include="License\License\NodaMoney.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
