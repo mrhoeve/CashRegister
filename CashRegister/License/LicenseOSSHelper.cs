@@ -6,11 +6,13 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CashRegister.License
 {
     class LicenseOSSHelper : IUsesOSS
     {
+        [ExcludeFromCodeCoverage]
         public List<OpenSourceInformation> getOpenSourceInformation()
         {
             return new List<OpenSourceInformation>

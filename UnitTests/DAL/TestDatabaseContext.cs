@@ -1,5 +1,8 @@
 ﻿using System.Data.Entity;
 using CashRegister.DAL;
+using Effort;
+using Effort.DataLoaders;
+using Effort.Provider;
 using NUnit.Framework;
 
 namespace UnitTests.DAL
@@ -9,8 +12,9 @@ namespace UnitTests.DAL
         [SetUp]
         public void Setup()
         {
-            Context.getInstance().setTest(Effort.DbConnectionFactory.CreateTransient());
-            Database.SetInitializer(new DatabaseContextTestInitialiser());
+            Context.getInstance().setTest(DbConnectionFactory.CreateTransient(), new DatabaseContextTestInitialiser());
+            // EntityFrameworkEffortManager.ContextFactory = context => Context.getInstance().Get();
+            // Database.SetInitializer(new DatabaseContextTestInitialiser());
             Assert.IsTrue(Context.getInstance().isTest());
             Assert.IsFalse(Context.getInstance().isProduction());
         }

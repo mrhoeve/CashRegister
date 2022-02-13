@@ -1,8 +1,9 @@
-﻿using CashRegister.DataModels;
+using CashRegister.DataModels;
 using CashRegister.Helpers;
 using CashRegister.Model;
 using NLog;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
@@ -52,35 +53,39 @@ namespace CashRegister.DAL
         {
             Persoon currentUser = CurUser.get().isLoggedIn() ? CurUser.get().getCurrentUser() : null;
 
-            var entriesAdded = ChangeTracker.Entries()
-                .Where(e => e.Entity == Persoon)
-                .Where(e => e.State == EntityState.Added);
+            var persoonsWijzigingen = ChangeTracker.Entries()
+                .Where(e => e.Entity is Persoon)
+                .Where(e => e.State != EntityState.Detached && e.State != EntityState.Unchanged);
 
-            foreach (var entry in entriesAdded)
+            foreach (var entry in persoonsWijzigingen)
             {
+                var currentDateTime = DateTime.Now;
                 var persoon = entry.Entity as Persoon;
-                persoon.AangemaaktOp = DateTime.Now;
-                persoon.AangemaaktDoor = currentUser;
-                persoon.GewijzigdOp = DateTime.Now;
-                persoon.GewijzigdDoor = currentUser;
+                // Als de persoon is toegevoegd zetten we de datum en tijd
+                // en de user die de bewerking heeft uitgevoerd
+                if (entry.State == EntityState.Added)
+                {
+                    persoon.AangemaaktOp = currentDateTime;
+                    if(currentUser != null) persoon.AangemaaktDoor = currentUser;
+                }
+                // De gegevens zetten we altijd
+                persoon.GewijzigdOp = currentDateTime;
+                if(currentUser != null) persoon.GewijzigdDoor = currentUser;
+                // Indien een persoon verwijderd wordt, dan doen we dit niet echt
+                // We zetten het record om naar Modified en vullen de relevante velden
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    persoon.VerwijderdOp = currentDateTime;
+                    if(currentUser != null) persoon.VerwijderdDoor = currentUser;
+                }
             }
 
-            var entriesModified = ChangeTracker.Entries()
-                .Where(e => e.Entity == Persoon)
-                .Where(e => e.State == EntityState.Modified);
-
-            foreach (var entry in entriesModified)
-            {
-                var persoon = entry.Entity as Persoon;
-                persoon.GewijzigdOp = DateTime.Now;
-                persoon.GewijzigdDoor = currentUser;
-            }
-
-            var productPrijzen = ChangeTracker.Entries()
+            var productprijzenToegevoegd = ChangeTracker.Entries()
                 .Where(e => e.Entity == ProductPrijs)
                 .Where(e => e.State == EntityState.Added);
 
-            foreach (var entry in productPrijzen)
+            foreach (var entry in productprijzenToegevoegd)
             {
                 var productPrijs = entry.Entity as ProductPrijs;
                 productPrijs.AangemaaktOp = DateTime.Now.Date;

@@ -56,7 +56,7 @@ namespace CashRegister
         private static void ShowVersionInformation()
         {
             logger.Info($"CashRegister {GitVersionHelper.GetFullVersionInformation().ToLower()}");
-            if(!String.IsNullOrEmpty(GitVersionHelper.GetBrancheName()))
+            if (!String.IsNullOrEmpty(GitVersionHelper.GetBrancheName()))
             {
                 logger.Info($"{GitVersionHelper.GetBrancheName()}");
             }
@@ -104,7 +104,7 @@ namespace CashRegister
             };
             config.AddTarget(fileTarget);
 #if DEBUG
-            config.AddRule(LogLevel.Debug,LogLevel.Fatal, fileTarget);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, fileTarget);
 #else
             config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTarget);
 #endif

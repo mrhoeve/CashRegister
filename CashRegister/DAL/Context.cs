@@ -1,4 +1,5 @@
-﻿using CashRegister.Helpers;
+﻿using System;
+using CashRegister.Helpers;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -35,13 +36,14 @@ namespace CashRegister.DAL
             }
         }
 
-        public void setTest(DbConnection connection)
+        public void setTest(DbConnection connection, IDatabaseInitializer<DatabaseContext> dbInitializer)
         {
             if (_context == null)
             {
                 productionEnvironment = false;
                 _context = new DatabaseContext(connection, productionEnvironment);
                 // Initialising is set from test project
+                Database.SetInitializer(dbInitializer);
             }
         }
 

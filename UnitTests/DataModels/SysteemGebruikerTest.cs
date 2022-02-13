@@ -1,4 +1,6 @@
-﻿using CashRegister.DataModels;
+﻿using System.Collections.Generic;
+using CashRegister.DataModels;
+using CashRegister.License;
 using NUnit.Framework;
 
 namespace UnitTests.DataModels

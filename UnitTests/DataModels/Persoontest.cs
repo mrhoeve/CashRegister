@@ -1,4 +1,5 @@
-﻿using CashRegister.DataModels;
+﻿using System;
+using CashRegister.DataModels;
 using CashRegister.Enum;
 using NUnit.Framework;
 
@@ -8,10 +9,21 @@ namespace UnitTests.DataModels
     public class PersoonTest
     {
         [Test]
-        public void test_NieuwPersoon_HeeftRekening_ExpectTrue()
+        public void test_NieuwPersoon_DefaultSettings()
         {
             Persoon persoon = new Persoon();
             Assert.IsTrue(persoon.heeftRekening);
+            // Default settings, worden ingevuld bij het saven
+            Assert.IsNotNull(persoon.AangemaaktOp);
+            Assert.IsNull(persoon.AangemaaktDoorId);
+            Assert.IsNull(persoon.AangemaaktDoor);
+            Assert.IsNotNull(persoon.GewijzigdOp);
+            Assert.IsNull(persoon.GewijzigdDoorId);
+            Assert.IsNull(persoon.GewijzigdDoor);
+            Assert.IsNull(persoon.VerwijderdOp);
+            Assert.IsNull(persoon.VerwijderdDoorId);
+            Assert.IsNull(persoon.VerwijderdDoor);
+            
         }
 
         [Test]

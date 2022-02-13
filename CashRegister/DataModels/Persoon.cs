@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using CashRegister.Enum;
 using CashRegister.Helpers;
 
@@ -12,6 +13,7 @@ namespace CashRegister.DataModels
         private bool rekening = true;
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Voornaam { get; set; }
         public string Tussenvoegsel { get; set; }
@@ -46,7 +48,7 @@ namespace CashRegister.DataModels
         [InverseProperty("HeeftVerwijderd")]
         public virtual Persoon VerwijderdDoor { get; set; }
 
-        public virtual SysteemGebruiker SysteemGebruiker { get; set; }
+        public virtual SysteemGebruiker? SysteemGebruiker { get; set; }
         [InverseProperty("AangemaaktDoor")]
         public virtual ICollection<Persoon> HeeftAangemaakt { get; set; }
         [InverseProperty("GewijzigdDoor")]
