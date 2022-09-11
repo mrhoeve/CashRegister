@@ -75,12 +75,12 @@ namespace CashRegister
         {
             StringBuilder currentUsers = new StringBuilder();
             currentUsers.Append("Current system users:");
-            List<SysteemGebruiker> systemUsers = new List<SysteemGebruiker>();
-            systemUsers = Context.getInstance().Get().SysteemGebruiker.ToList();
-            foreach (SysteemGebruiker user in systemUsers)
+            List<Persoon> systemUsers = new List<Persoon>();
+            systemUsers = Context.getInstance().Get().Persoon.Where(persoon => persoon.SystemUser == true).ToList();
+            foreach (Persoon persoon in systemUsers)
             {
                 currentUsers.Append(" - ");
-                currentUsers.Append(user.Persoon.GetVolledigeNaam());
+                currentUsers.Append(persoon.GetVolledigeNaam());
             }
             logger.Debug(currentUsers.ToString());
         }

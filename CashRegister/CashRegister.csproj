@@ -124,7 +124,6 @@
     <Compile Include="DAL\DatabaseContextInitialiser.cs" />
     <Compile Include="DataModels\Product.cs" />
     <Compile Include="DataModels\ProductPrijs.cs" />
-    <Compile Include="DataModels\SysteemGebruiker.cs" />
     <Compile Include="DataModels\Transactie.cs" />
     <Compile Include="Enum\NameOrder.cs" />
     <Compile Include="Form1.cs">
@@ -259,6 +258,7 @@
     <EmbeddedResource Include="License\License\BCrypt.Net-Next.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Interface" />
     <Folder Include="Interface\" />
   </ItemGroup>
   <ItemGroup>

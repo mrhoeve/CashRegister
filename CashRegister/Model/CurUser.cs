@@ -4,6 +4,7 @@ using CashRegister.Enum;
 using NLog;
 using System;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Timers;
 
 namespace CashRegister.Model
@@ -19,7 +20,6 @@ namespace CashRegister.Model
 
         private event CurUserStatusChange curUserStatusChange;
         private Persoon _persoon { get; set; }
-        private SysteemGebruiker _systeemGebruiker { get; set; }
         private TimeSpan _timerInterval { get; set; }
         private Timer _timer;
         private DatabaseContext _context;
@@ -30,7 +30,6 @@ namespace CashRegister.Model
             logger.Trace("CurUser started");
             // Make sure we begin with nothing
             _persoon = null;
-            _systeemGebruiker = null;
             // Setup the timer
             _timer = new Timer();
             _timerInterval = TimeSpan.FromMinutes(5);
@@ -46,22 +45,20 @@ namespace CashRegister.Model
         }
 
         #region "Public functions"
-        public void LogIn(Persoon persoon, string password)
+        public void LogIn(Persoon persoonToLogin, string password)
         {
             // When we get a login request, we automatically log the current user out
             LogOut();
             // Do we have a valid context
             if (_context == null) getContext();
             // Do we have a valid Persoon
-            if (persoon == null) return;
+            if (persoonToLogin == null) return;
             // Check the credentials
-            Persoon per = _context.Persoon.Where(p => p.Id == persoon.Id).SingleOrDefault();
-            if (per == null || per.SysteemGebruiker == null) return;
-            SysteemGebruiker systeemGebruiker = per.SysteemGebruiker;
+            Persoon persoon = _context.Persoon.Where(p => p.Id == persoonToLogin.Id).SingleOrDefault();
+            if (persoon is not { SystemUser: true }) return;
             // systeemGebruiker is null or the password is incorrect
-            if (!systeemGebruiker.isPasswordCorrect(password)) return;
+            if (!persoon.isPasswordCorrect(password)) return;
             _persoon = persoon;
-            _systeemGebruiker = systeemGebruiker;
             logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged in.");
             StartTimer();
         }
@@ -74,8 +71,6 @@ namespace CashRegister.Model
                 logger.Info($"User {_persoon.GetVolledigeNaam(NameOrder.Firstname)} logged out.");
             }
             _persoon = null;
-            _systeemGebruiker = null;
-
         }
 
         public void SubscribeToUserStatusChange(CurUserStatusChange subscriber)
@@ -91,7 +86,7 @@ namespace CashRegister.Model
         public bool isLoggedIn()
         {
             if(_timer.Enabled) _timer.Reset();
-            return ((_persoon != null && _persoon.Id != 0) && (_systeemGebruiker != null && _systeemGebruiker.PersoonId != 0));
+            return ((_persoon != null && _persoon.Id != 0) && (_persoon.SystemUser));
         }
 
         public Persoon getCurrentUser()

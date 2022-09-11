@@ -45,6 +45,7 @@ namespace CashRegister.DAL
             Persoon administrator = new Persoon()
             {
                 Achternaam = "Administrator",
+                Wachtwoord = DataModels.Persoon.validateAndHashPassword("@dmin7944AM24"),
                 heeftRekening = false,
                 AangemaaktOp = DateTime.Now,
                 AangemaaktDoor = systemAccount,
@@ -71,13 +72,6 @@ namespace CashRegister.DAL
             context.Persoon.AddOrUpdate(klant);
             logger.Debug($"Account {klant.GetVolledigeNaam()} created");
 #endif
-
-            context.SysteemGebruiker.AddOrUpdate(
-                new SysteemGebruiker()
-                {
-                    Persoon = administrator,
-                    Wachtwoord = DataModels.SysteemGebruiker.validateAndHashPassword("@dmin7944AM24")
-                });
 
             // Aanmaken standaard producten met huidige prijzen
             Product bier = new Product() { Id = 1, Productomschrijving = "Bier" };

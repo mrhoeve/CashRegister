@@ -11,10 +11,7 @@ namespace UnitTests.DAL
             base.Seed(context);
 
             // Aanmaken default administrator
-            context.Persoon.AddOrUpdate(Definitions.localAdminP);
-
-            context.SysteemGebruiker.AddOrUpdate(
-                Definitions.localAdminS);
+            context.Persoon.AddOrUpdate(Definitions.localAdmin);
 
             context.Product.AddOrUpdate(Definitions.product1, Definitions.product2);
 

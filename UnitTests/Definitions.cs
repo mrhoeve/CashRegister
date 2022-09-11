@@ -6,10 +6,9 @@ namespace UnitTests
     class Definitions
     {
         // For testing administrators
-        // Persoon localAdminP must be made without a SysteemGebruiker
+        // Persoon localAdmin must be made without a SysteemGebruiker
         // Within the MockEntityFramework class, they'll be joined together
-        public static readonly Persoon localAdminP = new Persoon() { Voornaam = "Bas", Tussenvoegsel = "", Achternaam = "Uurman", AangemaaktOp = DateTime.UtcNow, GewijzigdOp = DateTime.UtcNow};
-        public static readonly SysteemGebruiker localAdminS = new SysteemGebruiker() { Persoon = localAdminP, Wachtwoord = SysteemGebruiker.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID) };
+        public static readonly Persoon localAdmin = new Persoon() { Voornaam = "Bas", Tussenvoegsel = "", Achternaam = "Uurman", SystemUser = true, Wachtwoord = Persoon.validateAndHashPassword(Definitions.TEST_PASSWORD_VALID), AangemaaktOp = DateTime.UtcNow, GewijzigdOp = DateTime.UtcNow};
 
         // Testing passwords
         public const string TEST_PASSWORD_WITHOUTNUMERALS = "ABCDefgh";

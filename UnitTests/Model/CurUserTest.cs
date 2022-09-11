@@ -44,16 +44,16 @@ namespace UnitTests.Model
             Assert.AreEqual(0, curUserChangedEventCounter);
             CurUser curUser = CurUser.get();
             curUser.SubscribeToUserStatusChange(notifierCurUserChanged);
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALID);
             Assert.AreEqual(1, curUserChangedEventCounter);
             Assert.IsTrue(curUserStatus.isLoggedIn);
-            Assert.AreEqual(Definitions.localAdminP, curUserStatus.currentUser);
+            Assert.AreEqual(Definitions.localAdmin.Id, curUserStatus.currentUser.Id);
             curUser.LogOut();
             Assert.AreEqual(2, curUserChangedEventCounter);
             Assert.IsFalse(curUserStatus.isLoggedIn);
             Assert.AreEqual(null, curUserStatus.currentUser);
             curUser.UnsubscribeFromUserStatusChange(notifierCurUserChanged);
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALID);
             Assert.IsTrue(curUser.isLoggedIn());
             Assert.AreEqual(2, curUserChangedEventCounter);
             Assert.IsFalse(curUserStatus.isLoggedIn);
@@ -64,9 +64,9 @@ namespace UnitTests.Model
         public void test_isLoggedIn_NewInstanceWithRightCredentials_ExpectTrue()
         {
             CurUser curUser = CurUser.get();
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALID);
             Assert.IsTrue(curUser.isLoggedIn());
-            Assert.AreEqual(Definitions.localAdminP, curUser.getCurrentUser());
+            Assert.AreEqual(Definitions.localAdmin.Id, curUser.getCurrentUser().Id);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace UnitTests.Model
             // Change the private (!!) property from the initial 5 minutes to 2 seconds
             t.GetProperty("_timerInterval", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(o, TimeSpan.FromSeconds(2));
             // Log in with the right credentials
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALID);
             // Are we logged in?
             Assert.IsTrue(curUser.isLoggedIn());
             // Now wait for the adjusted timer to expire
@@ -100,7 +100,7 @@ namespace UnitTests.Model
             t.GetMethod("SetTimerInterval", BindingFlags.Instance | BindingFlags.NonPublic)
                 .Invoke(o, new object[] { TimeSpan.FromSeconds(timeout) });
             // Log in with the right credentials
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALID);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALID);
             for (int i = 0; i < 10; i++)
             {
                 // Now wait for the adjusted timer to nearly expire
@@ -118,7 +118,7 @@ namespace UnitTests.Model
         public void test_isLoggedIn_NewInstanceWithoutRightCredentials_ExpectFalse()
         {
             CurUser curUser = CurUser.get();
-            curUser.LogIn(Definitions.localAdminP, Definitions.TEST_PASSWORD_VALIDFORMAT_INVALIDPASSWORD);
+            curUser.LogIn(Definitions.localAdmin, Definitions.TEST_PASSWORD_VALIDFORMAT_INVALIDPASSWORD);
             Assert.IsFalse(curUser.isLoggedIn());
         }
 

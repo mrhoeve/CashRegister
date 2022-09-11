@@ -15,7 +15,6 @@ namespace CashRegister.DAL
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public IDbSet<Persoon> Persoon { get; set; }
-        public IDbSet<SysteemGebruiker> SysteemGebruiker { get; set; }
         public IDbSet<Product> Product { get; set; }
         public IDbSet<ProductPrijs> ProductPrijs { get; set; }
         public IDbSet<Transactie> Transactie { get; set; }
@@ -31,23 +30,25 @@ namespace CashRegister.DAL
             }
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            // To prevent pluralization of tablenames, we specify them specifically
-            // There's no way to do it with the old modelBuilder.Conventions.Remove<PluralizingTableNameConvention>() in newer versions of .NET Core
-            // See https://stackoverflow.com/questions/37493095/entity-framework-core-rc2-table-name-pluralization
-            modelBuilder.Entity<Persoon>()
-                .ToTable("Persoon")
-                .HasOptional(p => p.SysteemGebruiker)
-                .WithRequired(s => s.Persoon);
-            modelBuilder.Entity<SysteemGebruiker>().ToTable("SysteemGebruiker");
-            modelBuilder.Entity<Product>().ToTable("Product");
-            modelBuilder.Entity<ProductPrijs>()
-                .ToTable("ProductPrijs")
-                .HasRequired(p => p.Product);
-            modelBuilder.Entity<Transactie>().ToTable("Transactie");
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    // To prevent pluralization of tablenames, we specify them specifically
+        //    // There's no way to do it with the old modelBuilder.Conventions.Remove<PluralizingTableNameConvention>() in newer versions of .NET Core
+        //    // See https://stackoverflow.com/questions/37493095/entity-framework-core-rc2-table-name-pluralization
+        //    modelBuilder.Entity<Persoon>()
+        //        .ToTable("Persoon")
+        //        .HasOptional(p => p.SysteemGebruiker);
+        //    //.WithRequired(s => s.Persoon);
+        //    modelBuilder.Entity<SysteemGebruiker>()
+        //        .ToTable("SysteemGebruiker")
+        //        .HasRequired(s => s.Persoon);
+        //    modelBuilder.Entity<Product>().ToTable("Product");
+        //    modelBuilder.Entity<ProductPrijs>()
+        //        .ToTable("ProductPrijs")
+        //        .HasRequired(p => p.Product);
+        //    modelBuilder.Entity<Transactie>().ToTable("Transactie");
+        //}
 
         public override int SaveChanges()
         {
@@ -66,30 +67,36 @@ namespace CashRegister.DAL
                 if (entry.State == EntityState.Added)
                 {
                     persoon.AangemaaktOp = currentDateTime;
-                    if(currentUser != null) persoon.AangemaaktDoor = currentUser;
+                    if (currentUser != null) persoon.AangemaaktDoor = currentUser;
                 }
                 // De gegevens zetten we altijd
                 persoon.GewijzigdOp = currentDateTime;
-                if(currentUser != null) persoon.GewijzigdDoor = currentUser;
+                if (currentUser != null) persoon.GewijzigdDoor = currentUser;
                 // Indien een persoon verwijderd wordt, dan doen we dit niet echt
                 // We zetten het record om naar Modified en vullen de relevante velden
                 if (entry.State == EntityState.Deleted)
                 {
                     entry.State = EntityState.Modified;
+                    this.Entry(entry.Entity).Reload();
+                    // persoon = this.Persoon.Single(p => p.Id == persoon.Id);
+                    // this.Entry(originalPerson).State = EntityState.Detached;
+
+                    // persoon.AangemaaktDoorId = originalPerson.AangemaaktDoorId;
+                    // persoon.GewijzigdDoorId = originalPerson.GewijzigdDoorId;
                     persoon.VerwijderdOp = currentDateTime;
-                    if(currentUser != null) persoon.VerwijderdDoor = currentUser;
+                    if (currentUser != null) persoon.VerwijderdDoor = currentUser;
                 }
             }
 
-            var productprijzenToegevoegd = ChangeTracker.Entries()
-                .Where(e => e.Entity == ProductPrijs)
-                .Where(e => e.State == EntityState.Added);
-
-            foreach (var entry in productprijzenToegevoegd)
-            {
-                var productPrijs = entry.Entity as ProductPrijs;
-                productPrijs.AangemaaktOp = DateTime.Now.Date;
-            }
+            // var productprijzenToegevoegd = ChangeTracker.Entries()
+            //     .Where(e => e.Entity == ProductPrijs)
+            //     .Where(e => e.State == EntityState.Added);
+            //
+            // foreach (var entry in productprijzenToegevoegd)
+            // {
+            //     var productPrijs = entry.Entity as ProductPrijs;
+            //     productPrijs.AangemaaktOp = DateTime.Now.Date;
+            // }
             return base.SaveChanges();
         }
     }

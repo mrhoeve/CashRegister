@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CashRegister.DataModels
 {
+    [Table("Transactie")]
     public class Transactie
     {
         [Key]

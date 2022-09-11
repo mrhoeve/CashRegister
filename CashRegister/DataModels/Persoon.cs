@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using CashRegister.Enum;
 using CashRegister.Helpers;
+using CashRegister.License;
 
 namespace CashRegister.DataModels
 {
-    public class Persoon
+    [Table("Persoon")]
+    public class Persoon : IUsesOSS
     {
         private bool rekening = true;
 
@@ -18,6 +20,12 @@ namespace CashRegister.DataModels
         public string Voornaam { get; set; }
         public string Tussenvoegsel { get; set; }
         public string Achternaam { get; set; }
+        public bool SystemUser { get; set; }
+        // Wachtwoord: tenminste een UPPERCASE, lowercase en een getal.
+        // Overige validaties via de methode om het wachtwoord te zetten
+        [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password must contain at least 1 UPPERCASE, 1 lowercase and 1 numeral character")]        // See https://stackoverflow.com/questions/8699033/password-dataannotation-in-asp-net-mvc-3 (1 upper, 1 lower, 1 numeric)
+        [DataType(DataType.Password)]
+        public string Wachtwoord { get; set; }
         public bool heeftRekening
         {
             get { return rekening; }
@@ -48,7 +56,6 @@ namespace CashRegister.DataModels
         [InverseProperty("HeeftVerwijderd")]
         public virtual Persoon VerwijderdDoor { get; set; }
 
-        public virtual SysteemGebruiker? SysteemGebruiker { get; set; }
         [InverseProperty("AangemaaktDoor")]
         public virtual ICollection<Persoon> HeeftAangemaakt { get; set; }
         [InverseProperty("GewijzigdDoor")]
@@ -76,6 +83,25 @@ namespace CashRegister.DataModels
                             return $"{Achternaam}, {Voornaam} {Tussenvoegsel}".Normalise();
                 
             }
+        }
+        
+        public bool isPasswordCorrect(String password)
+        {
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(Wachtwoord)) return false;
+            return BCrypt.Net.BCrypt.Verify(password,this.Wachtwoord);
+        }
+
+        public static string validateAndHashPassword (string password)
+        {
+            return password.isValid() ? BCrypt.Net.BCrypt.HashPassword(password) : "";
+        }
+        
+        
+
+        [ExcludeFromCodeCoverage]
+        public List<OpenSourceInformation> getOpenSourceInformation()
+        {
+            return new OpenSourceInformation("BCrypt.Net-Next", "https://github.com/BcryptNet/bcrypt.net", "BCrypt.Net-Next.txt").singleList();
         }
     }
 }
