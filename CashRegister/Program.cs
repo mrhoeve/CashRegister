@@ -100,7 +100,8 @@ namespace CashRegister
             var fileTarget = new FileTarget("fileTarget")
             {
                 FileName = "${basedir}/logs/${shortdate}.log",
-                Layout = @"${date:format=dd-MM-yyyy HH\:mm\:ss.fff} ${uppercase:${level}} ${callsite} ${message}"
+                Layout = @"${date:format=dd-MM-yyyy HH\:mm\:ss.fff} ${uppercase:${level}} ${callsite} ${message}",
+                Encoding = Encoding.Default
             };
             config.AddTarget(fileTarget);
 #if DEBUG

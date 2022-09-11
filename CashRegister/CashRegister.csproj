@@ -280,13 +280,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.7</Version>
-    </PackageReference>
-    <PackageReference Include="NLog.Config">
-      <Version>4.7.7</Version>
+      <Version>5.0.4</Version>
     </PackageReference>
     <PackageReference Include="NLog.Schema">
-      <Version>4.7.7</Version>
+      <Version>5.0.4</Version>
     </PackageReference>
     <PackageReference Include="NodaMoney">
       <Version>1.0.5</Version>
