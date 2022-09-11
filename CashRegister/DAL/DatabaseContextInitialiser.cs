@@ -45,6 +45,7 @@ namespace CashRegister.DAL
             Persoon administrator = new Persoon()
             {
                 Achternaam = "Administrator",
+                SystemUser = true,
                 Wachtwoord = DataModels.Persoon.validateAndHashPassword("@dmin7944AM24"),
                 heeftRekening = false,
                 AangemaaktOp = DateTime.Now,
